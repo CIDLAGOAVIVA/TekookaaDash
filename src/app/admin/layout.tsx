@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <SidebarMenuButton asChild>
                 <Link href="/admin">
                   <Home />
-                  Dashboard
+                  Painel
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -38,7 +38,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <SidebarMenuButton asChild>
                 <Link href="/admin/settings">
                   <Settings />
-                  Settings
+                  Configurações
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -50,7 +50,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 <SidebarMenuButton asChild>
                   <Link href="/">
                     <Home />
-                    Back to App
+                    Voltar ao App
                   </Link>
                 </SidebarMenuButton>
              </SidebarMenuItem>
@@ -60,7 +60,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       <SidebarInset>
         <header className="flex items-center justify-between p-4 border-b">
             <SidebarTrigger />
-            <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+            <h1 className="text-xl font-semibold">Painel Administrativo</h1>
         </header>
         <main className="p-6">{children}</main>
       </SidebarInset>

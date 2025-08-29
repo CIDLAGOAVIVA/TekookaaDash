@@ -45,13 +45,13 @@ export interface WeatherForecast {
 export interface AlertingSensor {
   sensor: string;
   value: string;
-  level: 'Low' | 'High' | 'Critical';
+  level: 'Baixo' | 'Alto' | 'Crítico' | 'Low' | 'High' | 'Critical';
 }
 
 export interface LoggedAlert {
   id: string;
   message: string;
-  type: 'Alert' | 'Info';
+  type: 'Alerta' | 'Info' | 'Alert';
   timestamp: string;
 }
 

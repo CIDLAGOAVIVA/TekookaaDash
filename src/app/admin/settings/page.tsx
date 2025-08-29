@@ -12,8 +12,8 @@ export default function AdminSettingsPage() {
 
   const handleSaveChanges = () => {
     toast({
-      title: 'Settings Saved',
-      description: 'Your changes have been saved successfully.',
+      title: 'Configurações Salvas',
+      description: 'Suas alterações foram salvas com sucesso.',
     });
   };
 
@@ -21,34 +21,34 @@ export default function AdminSettingsPage() {
     <div className="grid gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>System Configuration</CardTitle>
-          <CardDescription>Manage general system settings and features.</CardDescription>
+          <CardTitle>Configuração do Sistema</CardTitle>
+          <CardDescription>Gerenciar configurações gerais do sistema e recursos.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center justify-between space-x-2">
             <Label htmlFor="maintenance-mode" className="flex flex-col space-y-1">
-              <span>Maintenance Mode</span>
+              <span>Modo de Manutenção</span>
               <span className="font-normal leading-snug text-muted-foreground">
-                Temporarily disable access to the main dashboard for users.
+                Desative temporariamente o acesso ao painel principal para os usuários.
               </span>
             </Label>
             <Switch id="maintenance-mode" />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="api-key">API Key</Label>
+            <Label htmlFor="api-key">Chave de API</Label>
             <Input id="api-key" type="password" defaultValue="****************" />
-            <p className="text-sm text-muted-foreground">Enter your primary API key for external service integrations.</p>
+            <p className="text-sm text-muted-foreground">Insira sua chave de API principal para integrações de serviços externos.</p>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="admin-email">Administrator Email</Label>
+            <Label htmlFor="admin-email">Email do Administrador</Label>
             <Input id="admin-email" type="email" defaultValue="admin@agrodash.com" />
-            <p className="text-sm text-muted-foreground">The email address for receiving system notifications.</p>
+            <p className="text-sm text-muted-foreground">O endereço de e-mail para receber notificações do sistema.</p>
           </div>
 
           <div className="flex justify-end">
-            <Button onClick={handleSaveChanges}>Save Changes</Button>
+            <Button onClick={handleSaveChanges}>Salvar Alterações</Button>
           </div>
         </CardContent>
       </Card>

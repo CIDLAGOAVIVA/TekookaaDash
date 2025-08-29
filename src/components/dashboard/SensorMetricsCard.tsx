@@ -14,7 +14,7 @@ interface MiniChartProps {
 const MiniChart: FC<MiniChartProps> = ({ data }) => {
   const chartConfig = {
     value: {
-      label: 'Value',
+      label: 'Valor',
       color: 'hsl(var(--primary))',
     },
   };
@@ -67,10 +67,10 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
       <CardHeader>
-        <CardTitle><h2 className="font-headline text-xl">Current Sensor Metrics</h2></CardTitle>
+        <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-11 gap-4">
           <MetricDisplay metric={sensorData.soilMoisture} />
           <MetricDisplay metric={sensorData.airTemperature} />
           <MetricDisplay metric={sensorData.soilPH} />

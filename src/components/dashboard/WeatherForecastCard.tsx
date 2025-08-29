@@ -25,7 +25,7 @@ const DailyForecastItem: FC<{ item: DailyForecast }> = ({ item }) => (
         <div className="w-1/4 flex justify-center">
             <WeatherIcon iconName={item.icon} className="w-7 h-7" />
         </div>
-        <p className="w-1/4 text-center text-sm">{item.precipitation}% Rain</p>
+        <p className="w-1/4 text-center text-sm">{item.precipitation}% Chuva</p>
         <p className="w-1/4 text-right font-semibold">{item.minTemp}° / {item.maxTemp}°</p>
     </div>
 )
@@ -47,13 +47,13 @@ const WeatherForecastCard: FC<WeatherForecastCardProps> = ({ forecast }) => {
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
       <CardHeader>
-        <CardTitle><h2 className="font-headline text-xl">Weather Forecast</h2></CardTitle>
+        <CardTitle><h2 className="font-headline text-xl">Previsão do Tempo</h2></CardTitle>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="24h" className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-card-foreground/5">
-            <TabsTrigger value="24h">Next 24 Hours</TabsTrigger>
-            <TabsTrigger value="5d">Next 5 Days</TabsTrigger>
+            <TabsTrigger value="24h">Próximas 24 Horas</TabsTrigger>
+            <TabsTrigger value="5d">Próximos 5 Dias</TabsTrigger>
           </TabsList>
           <TabsContent value="24h" className="mt-4">
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">

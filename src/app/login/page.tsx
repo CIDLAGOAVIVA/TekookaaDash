@@ -24,15 +24,15 @@ export default function LoginPage() {
     setTimeout(() => {
       if (email === 'admin@agrodash.com' && password === 'password') {
         toast({
-          title: 'Login Successful',
-          description: 'Welcome back, Admin!',
+          title: 'Login Bem-sucedido',
+          description: 'Bem-vindo de volta, Admin!',
         });
         router.push('/admin');
       } else {
         toast({
           variant: 'destructive',
-          title: 'Login Failed',
-          description: 'Invalid email or password. Please try again.',
+          title: 'Falha no Login',
+          description: 'Email ou senha inválidos. Por favor, tente novamente.',
         });
         setIsLoading(false);
       }
@@ -46,8 +46,8 @@ export default function LoginPage() {
           <div className="mb-4 flex justify-center">
             <Tractor className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-2xl">Admin Login</CardTitle>
-          <CardDescription>Enter your credentials to access the admin panel.</CardDescription>
+          <CardTitle className="text-2xl">Login do Admin</CardTitle>
+          <CardDescription>Insira suas credenciais para acessar o painel de administração.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -64,7 +64,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -75,10 +75,10 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Signing In...' : 'Sign In'}
+              {isLoading ? 'Entrando...' : 'Entrar'}
             </Button>
             <p className="text-center text-xs text-muted-foreground pt-2">
-              (Use admin@agrodash.com and 'password' to sign in)
+              (Use admin@agrodash.com e 'password' para entrar)
             </p>
           </form>
         </CardContent>

@@ -87,7 +87,7 @@ export default function DashboardClient() {
           <Button asChild variant="outline">
             <Link href="/login">
               <User className="mr-2 h-4 w-4" />
-              Admin Login
+              Login do Admin
             </Link>
           </Button>
         </div>
@@ -96,10 +96,10 @@ export default function DashboardClient() {
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
               <div>
-                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">1. Select Property</label>
+                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">1. Selecione a Propriedade</label>
                 <Select onValueChange={setSelectedPropertyId} value={selectedPropertyId ?? undefined}>
                   <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
-                    <SelectValue placeholder="Choose a property..." />
+                    <SelectValue placeholder="Escolha uma propriedade..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
                     {properties.map(prop => (
@@ -109,10 +109,10 @@ export default function DashboardClient() {
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">2. Select Crop</label>
+                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">2. Selecione a Cultura</label>
                 <Select onValueChange={setSelectedCropId} value={selectedCropId ?? undefined} disabled={!selectedPropertyId}>
                   <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
-                    <SelectValue placeholder="Choose a crop..." />
+                    <SelectValue placeholder="Escolha uma cultura..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
                     {availableCrops.map(crop => (
@@ -122,10 +122,10 @@ export default function DashboardClient() {
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">3. Select Station</label>
+                <label className="text-sm font-medium text-card-foreground/80 mb-2 block">3. Selecione a Estação</label>
                 <Select onValueChange={setSelectedStationId} value={selectedStationId ?? undefined} disabled={!selectedCropId}>
                   <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
-                    <SelectValue placeholder="Choose a monitoring station..." />
+                    <SelectValue placeholder="Escolha uma estação..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
                     {availableStations.map(station => (
@@ -155,7 +155,7 @@ export default function DashboardClient() {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
                 <SensorMetricsCard sensorData={selectedStationData.sensorData} />
@@ -187,8 +187,8 @@ export default function DashboardClient() {
               <Card className="max-w-md mx-auto rounded-2xl shadow-lg bg-card text-card-foreground border-none">
                 <CardContent className="p-8 flex flex-col items-center">
                     <Tractor className="w-16 h-16 text-primary mb-4" />
-                    <h2 className="text-2xl font-semibold mb-2">Welcome to AgroDash</h2>
-                    <p className="text-card-foreground/80">Please make a selection above to view dashboard data.</p>
+                    <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao AgroDash</h2>
+                    <p className="text-card-foreground/80">Por favor, faça uma seleção acima para visualizar os dados do painel.</p>
                 </CardContent>
               </Card>
             </motion.div>

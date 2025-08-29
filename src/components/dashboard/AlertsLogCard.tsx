@@ -14,8 +14,8 @@ const AlertsLogCard: FC<AlertsLogCardProps> = ({ alerts }) => {
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
       <CardHeader>
-        <CardTitle><h2 className="font-headline text-xl">Recent Alerts Log</h2></CardTitle>
-        <CardDescription className="text-card-foreground/70">A chronological feed of station events.</CardDescription>
+        <CardTitle><h2 className="font-headline text-xl">Log de Alertas Recentes</h2></CardTitle>
+        <CardDescription className="text-card-foreground/70">Um feed cronológico de eventos da estação.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4 max-h-[280px] overflow-y-auto pr-2">
@@ -27,7 +27,7 @@ const AlertsLogCard: FC<AlertsLogCardProps> = ({ alerts }) => {
                   variant={alert.type === 'Alert' ? 'destructive' : 'secondary'}
                   className={cn(
                     "border-transparent",
-                    alert.type === 'Alert' ? 'bg-destructive/80' : 'bg-primary/20 text-primary-foreground',
+                    alert.type === 'Alerta' ? 'bg-destructive/80' : 'bg-primary/20 text-primary-foreground',
                   )}
                 >
                   {alert.type}

@@ -5,11 +5,11 @@ export default function AdminDashboardPage() {
     <div className="grid gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Welcome, Admin!</CardTitle>
+          <CardTitle>Bem-vindo, Admin!</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>This is your administrative dashboard. From here, you can manage system settings, users, and other administrative tasks.</p>
-          <p className="mt-4">Use the navigation on the left to get started.</p>
+          <p>Este é o seu painel administrativo. A partir daqui, você pode gerenciar as configurações do sistema, usuários e outras tarefas administrativas.</p>
+          <p className="mt-4">Use a navegação à esquerda para começar.</p>
         </CardContent>
       </Card>
     </div>

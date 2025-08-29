@@ -16,8 +16,8 @@ const AlertingSensorsCard: FC<AlertingSensorsCardProps> = ({ sensors }) => {
       <CardHeader className="flex-row items-center gap-3 space-y-0">
         <AlertTriangle className="w-8 h-8 text-destructive" />
         <div>
-          <CardTitle><h2 className="font-headline text-xl text-destructive">Sensors in Alert</h2></CardTitle>
-          <CardDescription className="text-card-foreground/70">Readings outside the normal range.</CardDescription>
+          <CardTitle><h2 className="font-headline text-xl text-destructive">Sensores em Alerta</h2></CardTitle>
+          <CardDescription className="text-card-foreground/70">Leituras fora da faixa normal.</CardDescription>
         </div>
       </CardHeader>
       <CardContent>
@@ -37,7 +37,7 @@ const AlertingSensorsCard: FC<AlertingSensorsCardProps> = ({ sensors }) => {
           </ul>
         ) : (
           <div className="text-center py-8">
-            <p className="text-card-foreground/70">All sensors are operating within normal parameters.</p>
+            <p className="text-card-foreground/70">Todos os sensores estão operando dentro dos parâmetros normais.</p>
           </div>
         )}
       </CardContent>
