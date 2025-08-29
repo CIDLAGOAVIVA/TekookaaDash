@@ -11,6 +11,7 @@ const generateTrend = (base: number, points = 12, fluctuation = 0.1) => {
 const station1: Property['crops'][0]['stations'][0] = {
   id: 'st1',
   name: 'Estação 01 - Setor Norte',
+  location: { lat: -23.5505, lng: -46.6333 },
   sensorData: {
     soilMoisture: { name: 'Umidade do Solo', value: 35, unit: '%', trend: generateTrend(35), icon: Droplets },
     airTemperature: { name: 'Temperatura do Ar', value: 24, unit: '°C', trend: generateTrend(24), icon: Thermometer },
@@ -55,6 +56,7 @@ const station1: Property['crops'][0]['stations'][0] = {
 const station2: Property['crops'][0]['stations'][0] = {
   id: 'st2',
   name: 'Estação 02 - Setor Sul',
+  location: { lat: -23.5585, lng: -46.6413 },
   sensorData: {
     soilMoisture: { name: 'Umidade do Solo', value: 45, unit: '%', trend: generateTrend(45), icon: Droplets },
     airTemperature: { name: 'Temperatura do Ar', value: 26, unit: '°C', trend: generateTrend(26), icon: Thermometer },
@@ -92,22 +94,23 @@ const station2: Property['crops'][0]['stations'][0] = {
   ],
 };
 
-const station3 = { ...station1, id: 'st3', name: 'Estação 03 - Canto Oeste' };
-const station4 = { ...station2, id: 'st4', name: 'Estação 04 - Canto Leste' };
-const station5 = { ...station1, id: 'st5', name: 'Estação 05 - Central' };
-const station6 = { ...station2, id: 'st6', name: 'Estação 06 - Estufa A' };
-const station7 = { ...station1, id: 'st7', name: 'Estação 07 - Estufa B' };
-const station8 = { ...station2, id: 'st8', name: 'Estação 08 - Bloco do Pomar' };
-const station9 = { ...station1, id: 'st9', name: 'Estação 09 - Ponto do Reservatório' };
-const station10 = { ...station2, id: 'st10', name: 'Estação 10 - Campo Experimental' };
-const station11 = { ...station1, id: 'st11', name: 'Estação 11 - Pastagem Norte' };
-const station12 = { ...station2, id: 'st12', name: 'Estação 12 - Pastagem Sul' };
-const station13 = { ...station1, id: 'st13', name: 'Estação 13 - Área de Irrigação' };
+const station3 = { ...station1, id: 'st3', name: 'Estação 03 - Canto Oeste', location: { lat: -23.551, lng: -46.649 } };
+const station4 = { ...station2, id: 'st4', name: 'Estação 04 - Canto Leste', location: { lat: -23.559, lng: -46.635 } };
+const station5 = { ...station1, id: 'st5', name: 'Estação 05 - Central', location: { lat: -23.554, lng: -46.638 } };
+const station6 = { ...station2, id: 'st6', name: 'Estação 06 - Estufa A', location: { lat: -23.549, lng: -46.632 } };
+const station7 = { ...station1, id: 'st7', name: 'Estação 07 - Estufa B', location: { lat: -23.548, lng: -46.631 } };
+const station8 = { ...station2, id: 'st8', name: 'Estação 08 - Bloco do Pomar', location: { lat: -23.56, lng: -46.645 } };
+const station9 = { ...station1, id: 'st9', name: 'Estação 09 - Ponto do Reservatório', location: { lat: -23.545, lng: -46.64 } };
+const station10 = { ...station2, id: 'st10', name: 'Estação 10 - Campo Experimental', location: { lat: -23.562, lng: -46.63 } };
+const station11 = { ...station1, id: 'st11', name: 'Estação 11 - Pastagem Norte', location: { lat: -23.542, lng: -46.636 } };
+const station12 = { ...station2, id: 'st12', name: 'Estação 12 - Pastagem Sul', location: { lat: -23.565, lng: -46.642 } };
+const station13 = { ...station1, id: 'st13', name: 'Estação 13 - Área de Irrigação', location: { lat: -23.555, lng: -46.628 } };
 
 export const mockData: Property[] = [
   {
     id: 'prop1',
     name: 'Fazenda Vale Verde',
+    location: { lat: -23.5545, lng: -46.6385 },
     mapImageUrl: 'https://picsum.photos/1200/800',
     crops: [
       {
@@ -155,6 +158,7 @@ export const mockData: Property[] = [
   {
     id: 'prop2',
     name: 'Campos do Sol',
+    location: { lat: -22.9068, lng: -43.1729 },
     mapImageUrl: 'https://picsum.photos/1200/801',
     crops: [
       {

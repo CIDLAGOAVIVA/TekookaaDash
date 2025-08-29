@@ -58,6 +58,10 @@ export interface LoggedAlert {
 export interface Station {
   id: string;
   name: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
   sensorData: SensorData;
   weatherForecast: WeatherForecast;
   alertingSensors: AlertingSensor[];
@@ -77,4 +81,8 @@ export interface Property {
   name: string;
   crops: Crop[];
   mapImageUrl: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
 }

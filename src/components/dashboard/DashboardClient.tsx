@@ -167,7 +167,10 @@ export default function DashboardClient() {
                 <AlertingSensorsCard sensors={selectedStationData.alertingSensors} />
               </motion.div>
                <motion.div variants={cardVariants} className="lg:col-span-2">
-                <PropertyMapCard mapImageUrl={selectedProperty?.mapImageUrl ?? ""} stationName={selectedStationData.name} />
+                <PropertyMapCard 
+                  station={selectedStationData} 
+                  property={selectedProperty!} 
+                />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-1">
                  <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />

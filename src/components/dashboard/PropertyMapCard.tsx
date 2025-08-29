@@ -1,34 +1,60 @@
 "use client";
 
 import type { FC } from 'react';
-import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
+import type { Station, Property } from '@/lib/types';
 
 interface PropertyMapCardProps {
-  mapImageUrl: string;
-  stationName: string;
+  station: Station;
+  property: Property;
 }
 
-const PropertyMapCard: FC<PropertyMapCardProps> = ({ mapImageUrl, stationName }) => {
+const PropertyMapCard: FC<PropertyMapCardProps> = ({ station, property }) => {
+  const position = station?.location || property?.location;
+
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
+    return (
+        <Card className="rounded-2xl shadow-lg overflow-hidden h-full bg-card text-card-foreground border-none">
+            <CardHeader>
+                <CardTitle><h2 className="font-headline text-xl">Mapa da Propriedade</h2></CardTitle>
+                <CardDescription className="text-card-foreground/70">Estação selecionada: <span className="font-semibold text-primary">{station.name}</span></CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="h-full flex items-center justify-center">
+                    <p className="text-center text-card-foreground/70">
+                        A chave de API do Google Maps não está configurada.<br /> 
+                        Adicione NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ao seu arquivo .env.local
+                    </p>
+                </div>
+            </CardContent>
+        </Card>
+    )
+  }
+
   return (
-    <Card className="rounded-2xl shadow-lg overflow-hidden h-full bg-card text-card-foreground border-none">
-      <CardHeader>
-        <CardTitle><h2 className="font-headline text-xl">Mapa da Propriedade</h2></CardTitle>
-        <CardDescription className="text-card-foreground/70">Estação selecionada: <span className="font-semibold text-primary">{stationName}</span></CardDescription>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="aspect-[4/3] relative">
-          <Image
-            src={mapImageUrl}
-            alt="Mapa da Propriedade"
-            fill
-            className="object-cover"
-            data-ai-hint="mapa fazenda pinos"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
-      </CardContent>
-    </Card>
+    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+        <Card className="rounded-2xl shadow-lg overflow-hidden h-full bg-card text-card-foreground border-none">
+        <CardHeader>
+            <CardTitle><h2 className="font-headline text-xl">Mapa da Propriedade</h2></CardTitle>
+            <CardDescription className="text-card-foreground/70">Estação selecionada: <span className="font-semibold text-primary">{station.name}</span></CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+            <div className="aspect-[4/3] relative">
+                <Map
+                    mapId="agrodash-map"
+                    zoom={15}
+                    center={position}
+                    gestureHandling={'greedy'}
+                    disableDefaultUI={true}
+                    mapTypeId='satellite'
+                >
+                    <AdvancedMarker position={position} />
+                </Map>
+            </div>
+        </CardContent>
+        </Card>
+    </APIProvider>
   );
 };
 
