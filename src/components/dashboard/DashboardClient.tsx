@@ -13,7 +13,9 @@ import AlertingSensorsCard from './AlertingSensorsCard';
 import PropertyMapCard from './PropertyMapCard';
 import CameraFeedCard from './CameraFeedCard';
 import AlertsLogCard from './AlertsLogCard';
-import { Tractor } from 'lucide-react';
+import { Tractor, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const SkeletonCard = () => (
   <Card className="rounded-2xl">
@@ -77,9 +79,17 @@ export default function DashboardClient() {
   return (
     <main className="min-h-screen bg-background font-body">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-primary mb-2 font-headline">AgriSight Dashboard</h1>
-          <p className="text-muted-foreground">Your hub for precision agriculture monitoring.</p>
+        <div className="mb-8 flex justify-between items-center">
+          <div className="text-left">
+            <h1 className="text-4xl font-bold text-primary mb-2 font-headline">AgriSight Dashboard</h1>
+            <p className="text-muted-foreground">Your hub for precision agriculture monitoring.</p>
+          </div>
+          <Button asChild variant="outline">
+            <Link href="/login">
+              <User className="mr-2 h-4 w-4" />
+              Admin Login
+            </Link>
+          </Button>
         </div>
 
         <Card className="mb-8 rounded-2xl shadow-lg bg-card text-card-foreground border-none">
@@ -88,7 +98,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">1. Select Property</label>
                 <Select onValueChange={setSelectedPropertyId} value={selectedPropertyId ?? undefined}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
+                  <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
                     <SelectValue placeholder="Choose a property..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
@@ -101,7 +111,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">2. Select Crop</label>
                 <Select onValueChange={setSelectedCropId} value={selectedCropId ?? undefined} disabled={!selectedPropertyId}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
+                  <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
                     <SelectValue placeholder="Choose a crop..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
@@ -114,7 +124,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">3. Select Station</label>
                 <Select onValueChange={setSelectedStationId} value={selectedStationId ?? undefined} disabled={!selectedCropId}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
+                  <SelectTrigger className="rounded-lg text-base h-12 bg-white text-black">
                     <SelectValue placeholder="Choose a monitoring station..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
