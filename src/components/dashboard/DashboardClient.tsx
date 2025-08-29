@@ -145,7 +145,7 @@ export default function DashboardClient() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
             >
               {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
             </motion.div>
@@ -155,7 +155,7 @@ export default function DashboardClient() {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
                 <SensorMetricsCard sensorData={selectedStationData.sensorData} />
