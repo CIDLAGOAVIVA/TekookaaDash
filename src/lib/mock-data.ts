@@ -92,6 +92,14 @@ const station2: Property['crops'][0]['stations'][0] = {
   ],
 };
 
+const station3 = { ...station1, id: 'st3', name: 'Station 03 - West Corner' };
+const station4 = { ...station2, id: 'st4', name: 'Station 04 - East Corner' };
+const station5 = { ...station1, id: 'st5', name: 'Station 05 - Central Hub' };
+const station6 = { ...station2, id: 'st6', name: 'Station 06 - Greenhouse A' };
+const station7 = { ...station1, id: 'st7', name: 'Station 07 - Greenhouse B' };
+const station8 = { ...station2, id: 'st8', name: 'Station 08 - Orchard Block' };
+const station9 = { ...station1, id: 'st9', name: 'Station 09 - Reservoir Point' };
+
 export const mockData: Property[] = [
   {
     id: 'prop1',
@@ -106,7 +114,22 @@ export const mockData: Property[] = [
       {
         id: 'crop2',
         name: 'Corn',
-        stations: [{ ...station1, id: 'st3', name: 'Station 03 - Corn Field' }, { ...station2, id: 'st4', name: 'Station 04 - Corn Field' }],
+        stations: [station3, station4],
+      },
+      {
+        id: 'crop3',
+        name: 'Wheat',
+        stations: [station5],
+      },
+      {
+        id: 'crop4',
+        name: 'Sugarcane',
+        stations: [station6, station7],
+      },
+      {
+        id: 'crop5',
+        name: 'Cotton',
+        stations: [station8],
       },
     ],
   },
@@ -116,9 +139,9 @@ export const mockData: Property[] = [
     mapImageUrl: 'https://picsum.photos/1200/801',
     crops: [
       {
-        id: 'crop3',
+        id: 'crop6',
         name: 'Coffee',
-        stations: [{ ...station2, id: 'st5', name: 'Station 05 - Coffee Plantation' }],
+        stations: [station9],
       },
     ],
   },

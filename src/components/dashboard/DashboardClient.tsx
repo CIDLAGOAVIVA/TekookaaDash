@@ -91,7 +91,7 @@ export default function DashboardClient() {
                   <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a property..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-card text-card-foreground">
                     {properties.map(prop => (
                       <SelectItem key={prop.id} value={prop.id}>{prop.name}</SelectItem>
                     ))}
@@ -104,7 +104,7 @@ export default function DashboardClient() {
                   <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a crop..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-card text-card-foreground">
                     {availableCrops.map(crop => (
                       <SelectItem key={crop.id} value={crop.id}>{crop.name}</SelectItem>
                     ))}
@@ -117,7 +117,7 @@ export default function DashboardClient() {
                   <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a monitoring station..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-card text-card-foreground">
                     {availableStations.map(station => (
                       <SelectItem key={station.id} value={station.id}>{station.name}</SelectItem>
                     ))}
