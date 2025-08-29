@@ -13,6 +13,13 @@ export interface SensorData {
   airTemperature: SensorMetric;
   soilPH: SensorMetric;
   luminosity: SensorMetric;
+  airHumidity: SensorMetric;
+  windSpeed: SensorMetric;
+  soilTemperature: SensorMetric;
+  electricalConductivity: SensorMetric;
+  nitrogen: SensorMetric;
+  phosphorus: SensorMetric;
+  potassium: SensorMetric;
 }
 
 export interface HourlyForecast {

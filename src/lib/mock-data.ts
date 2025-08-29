@@ -1,10 +1,10 @@
 import type { Property } from '@/lib/types';
-import { Thermometer, Droplets, FlaskConical, Sun } from 'lucide-react';
+import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater,Sprout } from 'lucide-react';
 
-const generateTrend = (base: number, points = 12) => {
+const generateTrend = (base: number, points = 12, fluctuation = 0.1) => {
   return Array.from({ length: points }, (_, i) => ({
     time: `${String(i * 2).padStart(2, '0')}:00`,
-    value: parseFloat((base + (Math.random() - 0.5) * (base * 0.1)).toFixed(1)),
+    value: parseFloat((base + (Math.random() - 0.5) * (base * fluctuation)).toFixed(1)),
   }));
 };
 
@@ -15,7 +15,14 @@ const station1: Property['crops'][0]['stations'][0] = {
     soilMoisture: { name: 'Soil Moisture', value: 35, unit: '%', trend: generateTrend(35), icon: Droplets },
     airTemperature: { name: 'Air Temperature', value: 24, unit: '°C', trend: generateTrend(24), icon: Thermometer },
     soilPH: { name: 'Soil pH', value: 6.8, unit: '', trend: generateTrend(6.8), icon: FlaskConical },
-    luminosity: { name: 'Luminosity', value: 55000, unit: 'Lux', trend: generateTrend(55000, 12), icon: Sun },
+    luminosity: { name: 'Luminosity', value: 55000, unit: 'Lux', trend: generateTrend(55000), icon: Sun },
+    airHumidity: { name: 'Air Humidity', value: 60, unit: '%', trend: generateTrend(60), icon: Droplets },
+    windSpeed: { name: 'Wind Speed', value: 15, unit: 'km/h', trend: generateTrend(15), icon: Wind },
+    soilTemperature: { name: 'Soil Temperature', value: 22, unit: '°C', trend: generateTrend(22), icon: Heater },
+    electricalConductivity: { name: 'EC', value: 1.2, unit: 'mS/cm', trend: generateTrend(1.2), icon: Zap },
+    nitrogen: { name: 'Nitrogen (N)', value: 120, unit: 'kg/ha', trend: generateTrend(120), icon: Sprout },
+    phosphorus: { name: 'Phosphorus (P)', value: 80, unit: 'kg/ha', trend: generateTrend(80), icon: Leaf },
+    potassium: { name: 'Potassium (K)', value: 150, unit: 'kg/ha', trend: generateTrend(150), icon: Leaf },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({
@@ -52,7 +59,14 @@ const station2: Property['crops'][0]['stations'][0] = {
     soilMoisture: { name: 'Soil Moisture', value: 45, unit: '%', trend: generateTrend(45), icon: Droplets },
     airTemperature: { name: 'Air Temperature', value: 26, unit: '°C', trend: generateTrend(26), icon: Thermometer },
     soilPH: { name: 'Soil pH', value: 6.5, unit: '', trend: generateTrend(6.5), icon: FlaskConical },
-    luminosity: { name: 'Luminosity', value: 62000, unit: 'Lux', trend: generateTrend(62000, 12), icon: Sun },
+    luminosity: { name: 'Luminosity', value: 62000, unit: 'Lux', trend: generateTrend(62000), icon: Sun },
+    airHumidity: { name: 'Air Humidity', value: 55, unit: '%', trend: generateTrend(55), icon: Droplets },
+    windSpeed: { name: 'Wind Speed', value: 12, unit: 'km/h', trend: generateTrend(12), icon: Wind },
+    soilTemperature: { name: 'Soil Temperature', value: 24, unit: '°C', trend: generateTrend(24), icon: Heater },
+    electricalConductivity: { name: 'EC', value: 1.5, unit: 'mS/cm', trend: generateTrend(1.5), icon: Zap },
+    nitrogen: { name: 'Nitrogen (N)', value: 140, unit: 'kg/ha', trend: generateTrend(140), icon: Sprout },
+    phosphorus: { name: 'Phosphorus (P)', value: 90, unit: 'kg/ha', trend: generateTrend(90), icon: Leaf },
+    potassium: { name: 'Potassium (K)', value: 160, unit: 'kg/ha', trend: generateTrend(160), icon: Leaf },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({

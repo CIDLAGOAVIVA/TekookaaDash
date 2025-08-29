@@ -70,11 +70,18 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
         <CardTitle><h2 className="font-headline text-xl">Current Sensor Metrics</h2></CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <MetricDisplay metric={sensorData.soilMoisture} />
           <MetricDisplay metric={sensorData.airTemperature} />
           <MetricDisplay metric={sensorData.soilPH} />
           <MetricDisplay metric={sensorData.luminosity} />
+          <MetricDisplay metric={sensorData.airHumidity} />
+          <MetricDisplay metric={sensorData.windSpeed} />
+          <MetricDisplay metric={sensorData.soilTemperature} />
+          <MetricDisplay metric={sensorData.electricalConductivity} />
+          <MetricDisplay metric={sensorData.nitrogen} />
+          <MetricDisplay metric={sensorData.phosphorus} />
+          <MetricDisplay metric={sensorData.potassium} />
         </div>
       </CardContent>
     </Card>

@@ -88,7 +88,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">1. Select Property</label>
                 <Select onValueChange={setSelectedPropertyId} value={selectedPropertyId ?? undefined}>
-                  <SelectTrigger className="rounded-lg text-base h-12">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a property..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -101,7 +101,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">2. Select Crop</label>
                 <Select onValueChange={setSelectedCropId} value={selectedCropId ?? undefined} disabled={!selectedPropertyId}>
-                  <SelectTrigger className="rounded-lg text-base h-12">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a crop..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -114,7 +114,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">3. Select Station</label>
                 <Select onValueChange={setSelectedStationId} value={selectedStationId ?? undefined} disabled={!selectedCropId}>
-                  <SelectTrigger className="rounded-lg text-base h-12">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
                     <SelectValue placeholder="Choose a monitoring station..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -135,9 +135,9 @@ export default function DashboardClient() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             >
-              {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+              {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
             </motion.div>
           ) : selectedStationData ? (
             <motion.div
@@ -145,24 +145,24 @@ export default function DashboardClient() {
               variants={gridVariants}
               initial="hidden"
               animate="show"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             >
-              <motion.div variants={cardVariants} className="lg:col-span-2">
+              <motion.div variants={cardVariants} className="lg:col-span-4">
                 <SensorMetricsCard sensorData={selectedStationData.sensorData} />
               </motion.div>
-              <motion.div variants={cardVariants}>
+              <motion.div variants={cardVariants} className="lg:col-span-2">
                 <WeatherForecastCard forecast={selectedStationData.weatherForecast} />
               </motion.div>
-              <motion.div variants={cardVariants}>
+              <motion.div variants={cardVariants} className="lg:col-span-2">
                 <AlertingSensorsCard sensors={selectedStationData.alertingSensors} />
               </motion.div>
-              <motion.div variants={cardVariants}>
+               <motion.div variants={cardVariants} className="lg:col-span-2">
                 <PropertyMapCard mapImageUrl={selectedProperty?.mapImageUrl ?? ""} stationName={selectedStationData.name} />
               </motion.div>
-              <motion.div variants={cardVariants}>
+              <motion.div variants={cardVariants} className="lg:col-span-1">
                  <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
               </motion.div>
-              <motion.div variants={cardVariants} className="md:col-span-2 lg:col-span-1">
+              <motion.div variants={cardVariants} className="lg:col-span-1">
                 <AlertsLogCard alerts={selectedStationData.alertsLog} />
               </motion.div>
             </motion.div>
