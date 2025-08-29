@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sun, Cloud, CloudRain, CloudSun, Cloudy } from 'lucide-react';
 import type { WeatherForecast, DailyForecast, HourlyForecast } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 const weatherIcons: { [key: string]: JSX.Element } = {
   Sun: <Sun className="w-8 h-8 text-yellow-400" />,
