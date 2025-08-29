@@ -43,7 +43,7 @@ export default function AdminSettingsPage() {
           
           <div className="space-y-2">
             <Label htmlFor="admin-email">Administrator Email</Label>
-            <Input id="admin-email" type="email" defaultValue="admin@agrisight.com" />
+            <Input id="admin-email" type="email" defaultValue="admin@agrodash.com" />
             <p className="text-sm text-muted-foreground">The email address for receiving system notifications.</p>
           </div>
 

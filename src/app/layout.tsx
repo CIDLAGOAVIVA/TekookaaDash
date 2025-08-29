@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'AgriSight Dashboard',
-  description: 'Precision Agriculture Monitoring Dashboard',
+  title: 'AgroDash',
+  description: 'Dados que cultivam o seu dinheiro',
 };
 
 export default function RootLayout({

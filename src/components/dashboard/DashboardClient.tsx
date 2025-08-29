@@ -81,8 +81,8 @@ export default function DashboardClient() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex justify-between items-center">
           <div className="text-left">
-            <h1 className="text-4xl font-bold text-primary mb-2 font-headline">AgriSight Dashboard</h1>
-            <p className="text-muted-foreground">Your hub for precision agriculture monitoring.</p>
+            <h1 className="text-4xl font-bold text-primary mb-2 font-headline">AgroDash</h1>
+            <p className="text-muted-foreground">Dados que cultivam o seu dinheiro</p>
           </div>
           <Button asChild variant="outline">
             <Link href="/login">
@@ -187,7 +187,7 @@ export default function DashboardClient() {
               <Card className="max-w-md mx-auto rounded-2xl shadow-lg bg-card text-card-foreground border-none">
                 <CardContent className="p-8 flex flex-col items-center">
                     <Tractor className="w-16 h-16 text-primary mb-4" />
-                    <h2 className="text-2xl font-semibold mb-2">Welcome to AgriSight</h2>
+                    <h2 className="text-2xl font-semibold mb-2">Welcome to AgroDash</h2>
                     <p className="text-card-foreground/80">Please make a selection above to view dashboard data.</p>
                 </CardContent>
               </Card>

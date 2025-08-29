@@ -22,7 +22,7 @@ export default function LoginPage() {
 
     // Simulate API call
     setTimeout(() => {
-      if (email === 'admin@agrisight.com' && password === 'password') {
+      if (email === 'admin@agrodash.com' && password === 'password') {
         toast({
           title: 'Login Successful',
           description: 'Welcome back, Admin!',
@@ -56,7 +56,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@agrisight.com"
+                placeholder="admin@agrodash.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -78,7 +78,7 @@ export default function LoginPage() {
               {isLoading ? 'Signing In...' : 'Sign In'}
             </Button>
             <p className="text-center text-xs text-muted-foreground pt-2">
-              (Use admin@agrisight.com and 'password' to sign in)
+              (Use admin@agrodash.com and 'password' to sign in)
             </p>
           </form>
         </CardContent>
