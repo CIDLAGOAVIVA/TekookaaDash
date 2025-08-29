@@ -88,7 +88,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">1. Select Property</label>
                 <Select onValueChange={setSelectedPropertyId} value={selectedPropertyId ?? undefined}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
                     <SelectValue placeholder="Choose a property..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
@@ -101,7 +101,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">2. Select Crop</label>
                 <Select onValueChange={setSelectedCropId} value={selectedCropId ?? undefined} disabled={!selectedPropertyId}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
                     <SelectValue placeholder="Choose a crop..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
@@ -114,7 +114,7 @@ export default function DashboardClient() {
               <div>
                 <label className="text-sm font-medium text-card-foreground/80 mb-2 block">3. Select Station</label>
                 <Select onValueChange={setSelectedStationId} value={selectedStationId ?? undefined} disabled={!selectedCropId}>
-                  <SelectTrigger className="rounded-lg text-base h-12 text-card-foreground">
+                  <SelectTrigger className="rounded-lg text-base h-12 text-black">
                     <SelectValue placeholder="Choose a monitoring station..." />
                   </SelectTrigger>
                   <SelectContent className="bg-card text-card-foreground">
