@@ -41,7 +41,7 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
 const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
     const Icon = metric.icon;
     return (
-        <div className="flex flex-col justify-between p-4 bg-card/50 rounded-lg h-full">
+        <div className="flex flex-col justify-between p-4 bg-card-foreground/5 rounded-lg h-full">
             <div>
                 <div className="flex items-center justify-between mb-1">
                     <span className="text-sm text-card-foreground/80">{metric.name}</span>
