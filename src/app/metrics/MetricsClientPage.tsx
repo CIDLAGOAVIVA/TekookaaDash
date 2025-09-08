@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label } from 'recharts';
 import { mockData } from '@/lib/mock-data';
 import type { SensorData, SensorMetric, Station } from '@/lib/types';
 import { ArrowLeft } from 'lucide-react';
@@ -20,35 +20,52 @@ const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
             {metric.name}
         </CardTitle>
         <CardDescription>
-            Últimas 24 horas
+            Últimos 7 dias
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={metric.trend} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                <AreaChart data={metric.trend} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
                     <defs>
-                        <linearGradient id={`color${metric.name}`} x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id={`color${metric.name.replace(/\s/g, '')}`} x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
                             <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
                         </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
-                    <XAxis dataKey="time" stroke="hsl(var(--foreground) / 0.7)" />
-                    <YAxis stroke="hsl(var(--foreground) / 0.7)" unit={metric.unit} />
+                    <XAxis 
+                      dataKey="time" 
+                      stroke="hsl(var(--foreground) / 0.7)"
+                      tick={{ fill: 'hsl(var(--foreground) / 0.9)' }}
+                      tickLine={{ stroke: 'hsl(var(--border))' }}
+                    >
+                      <Label value="Dias" offset={-15} position="insideBottom" fill="hsl(var(--foreground) / 0.9)" />
+                    </XAxis>
+                    <YAxis 
+                      stroke="hsl(var(--foreground) / 0.7)" 
+                      unit={metric.unit}
+                      tick={{ fill: 'hsl(var(--foreground) / 0.9)' }}
+                      tickLine={{ stroke: 'hsl(var(--border))' }}
+                    >
+                        <Label value={metric.unit} angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: 'hsl(var(--foreground) / 0.9)' }} />
+                    </YAxis>
                     <Tooltip 
                         contentStyle={{ 
                             backgroundColor: 'hsl(var(--card))',
                             borderColor: 'hsl(var(--border))',
-                            color: 'hsl(var(--card-foreground))'
+                            color: 'hsl(var(--card-foreground))',
+                            borderRadius: 'var(--radius)'
                         }}
+                        labelStyle={{ fontWeight: 'bold' }}
                     />
                     <Area 
                         type="monotone" 
                         dataKey="value" 
                         stroke="hsl(var(--primary))" 
+                        strokeWidth={2}
                         fillOpacity={1} 
-                        fill={`url(#color${metric.name})`} 
+                        fill={`url(#color${metric.name.replace(/\s/g, '')})`} 
                     />
                 </AreaChart>
             </ResponsiveContainer>
@@ -59,7 +76,7 @@ const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Horário</TableHead>
+                            <TableHead>Dia</TableHead>
                             <TableHead className="text-right">Valor</TableHead>
                         </TableRow>
                     </TableHeader>

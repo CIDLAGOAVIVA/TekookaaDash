@@ -1,9 +1,9 @@
 import type { Property } from '@/lib/types';
 import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater,Sprout, CloudDrizzle } from 'lucide-react';
 
-const generateTrend = (base: number, points = 12, fluctuation = 0.1) => {
+const generateTrend = (base: number, points = 7, fluctuation = 0.1) => {
   return Array.from({ length: points }, (_, i) => ({
-    time: `${String(i * 2).padStart(2, '0')}:00`,
+    time: `Dia ${i + 1}`,
     value: parseFloat((base + (Math.random() - 0.5) * (base * fluctuation)).toFixed(1)),
   }));
 };
