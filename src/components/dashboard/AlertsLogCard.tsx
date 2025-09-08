@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import type { LoggedAlert } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface AlertsLogCardProps {
   alerts: LoggedAlert[];
@@ -18,25 +19,27 @@ const AlertsLogCard: FC<AlertsLogCardProps> = ({ alerts }) => {
         <CardDescription className="text-card-foreground/70">Um feed cronológico de eventos da estação.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4 max-h-[280px] overflow-y-auto pr-2">
-          {alerts.map((alert) => (
-            <div key={alert.id} className="flex items-start gap-4">
-              <div className="text-xs font-mono text-card-foreground/60 pt-1 w-20">{alert.timestamp}</div>
-              <div className="flex-1 flex items-center gap-2">
-                <Badge
-                  variant={alert.type === 'Alert' ? 'destructive' : 'secondary'}
-                  className={cn(
-                    "border-transparent",
-                    alert.type === 'Alerta' ? 'bg-destructive/80' : 'bg-primary/20 text-primary-foreground',
-                  )}
-                >
-                  {alert.type}
-                </Badge>
-                <p className="text-sm">{alert.message}</p>
+        <ScrollArea className="h-[200px] pr-4">
+          <div className="space-y-4">
+            {alerts.map((alert) => (
+              <div key={alert.id} className="flex items-start gap-4">
+                <div className="text-xs font-mono text-card-foreground/60 pt-1 w-20">{alert.timestamp}</div>
+                <div className="flex-1 flex items-center gap-2">
+                  <Badge
+                    variant={alert.type === 'Alert' ? 'destructive' : 'secondary'}
+                    className={cn(
+                      "border-transparent",
+                      alert.type === 'Alerta' ? 'bg-destructive/80' : 'bg-primary/20 text-primary-foreground',
+                    )}
+                  >
+                    {alert.type}
+                  </Badge>
+                  <p className="text-sm">{alert.message}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollArea>
       </CardContent>
     </Card>
   );

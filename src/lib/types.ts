@@ -55,6 +55,13 @@ export interface LoggedAlert {
   timestamp: string;
 }
 
+export interface ActivityProgress {
+  name: string;
+  current: number;
+  total: number;
+  unit: string;
+}
+
 export interface Station {
   id: string;
   name: string;
@@ -68,6 +75,7 @@ export interface Station {
   cameraImageUrl: string;
   cameraTimestamp: string;
   alertsLog: LoggedAlert[];
+  activityProgress: ActivityProgress[];
 }
 
 export interface Crop {

@@ -51,6 +51,11 @@ const station1: Property['crops'][0]['stations'][0] = {
     { id: 'al2', message: 'Bateria do Sensor Baixa', type: 'Info', timestamp: '09:15 AM' },
     { id: 'al3', message: 'Alta Temperatura Esperada', type: 'Info', timestamp: 'Ontem' },
   ],
+  activityProgress: [
+    { name: 'Plantio', current: 80, total: 100, unit: 'ha' },
+    { name: 'Pulverização', current: 50, total: 100, unit: 'ha' },
+    { name: 'Colheita', current: 20, total: 100, unit: 'ha' },
+  ],
 };
 
 const station2: Property['crops'][0]['stations'][0] = {
@@ -91,6 +96,11 @@ const station2: Property['crops'][0]['stations'][0] = {
   alertsLog: [
     { id: 'al4', message: 'Sistema OK', type: 'Info', timestamp: '11:00 AM' },
     { id: 'al5', message: 'Manutenção Agendada', type: 'Info', timestamp: '08:00 AM' },
+  ],
+  activityProgress: [
+    { name: 'Plantio', current: 115, total: 120, unit: 'ha' },
+    { name: 'Pulverização', current: 80, total: 120, unit: 'ha' },
+    { name: 'Colheita', current: 40, total: 120, unit: 'ha' },
   ],
 };
 

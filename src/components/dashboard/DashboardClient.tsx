@@ -13,6 +13,7 @@ import AlertingSensorsCard from './AlertingSensorsCard';
 import PropertyMapCard from './PropertyMapCard';
 import CameraFeedCard from './CameraFeedCard';
 import AlertsLogCard from './AlertsLogCard';
+import ActivityProgressCard from './ActivityProgressCard';
 import { Tractor, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -43,13 +44,27 @@ export default function DashboardClient() {
   const selectedStationData = useMemo(() => availableStations.find(s => s.id === selectedStationId), [availableStations, selectedStationId]);
 
   useEffect(() => {
-    setSelectedCropId(null);
-    setSelectedStationId(null);
-  }, [selectedPropertyId]);
+    if (properties.length > 0) {
+      setSelectedPropertyId(properties[0].id);
+    }
+  }, [properties]);
 
   useEffect(() => {
+    if (availableCrops.length > 0) {
+      setSelectedCropId(availableCrops[0].id);
+    } else {
+      setSelectedCropId(null);
+    }
     setSelectedStationId(null);
-  }, [selectedCropId]);
+  }, [selectedPropertyId, availableCrops]);
+
+  useEffect(() => {
+    if (availableStations.length > 0) {
+      setSelectedStationId(availableStations[0].id);
+    } else {
+      setSelectedStationId(null);
+    }
+  }, [selectedCropId, availableStations]);
   
   useEffect(() => {
     if (selectedStationId) {
@@ -176,6 +191,9 @@ export default function DashboardClient() {
                  <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-1">
+                 <ActivityProgressCard activities={selectedStationData.activityProgress} />
+              </motion.div>
+               <motion.div variants={cardVariants} className="lg:col-span-4">
                 <AlertsLogCard alerts={selectedStationData.alertsLog} />
               </motion.div>
             </motion.div>
