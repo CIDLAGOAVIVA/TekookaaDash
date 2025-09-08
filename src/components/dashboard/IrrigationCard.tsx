@@ -3,7 +3,7 @@
 import type { FC } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Droplets, CloudDrizzle, BrainCircuit } from 'lucide-react';
+import { Droplets, Thermometer, BrainCircuit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { SensorMetric } from '@/lib/types';
@@ -11,11 +11,21 @@ import { getIrrigationRecommendation, type IrrigationInput } from '@/ai/flows/ir
 
 interface IrrigationCardProps {
   soilMoisture: SensorMetric;
-  evapotranspiration: SensorMetric;
+  airTemperature: SensorMetric;
+  airHumidity: SensorMetric;
+  windSpeed: SensorMetric;
+  luminosity: SensorMetric;
   cropType: string;
 }
 
-const IrrigationCard: FC<IrrigationCardProps> = ({ soilMoisture, evapotranspiration, cropType }) => {
+const IrrigationCard: FC<IrrigationCardProps> = ({ 
+  soilMoisture, 
+  airTemperature,
+  airHumidity,
+  windSpeed,
+  luminosity,
+  cropType 
+}) => {
   const [recommendation, setRecommendation] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +35,10 @@ const IrrigationCard: FC<IrrigationCardProps> = ({ soilMoisture, evapotranspirat
     try {
       const input: IrrigationInput = {
         soilMoisture: soilMoisture.value,
-        evapotranspiration: evapotranspiration.value,
+        airTemperature: airTemperature.value,
+        airHumidity: airHumidity.value,
+        windSpeed: windSpeed.value,
+        luminosity: luminosity.value,
         cropType,
       };
       const result = await getIrrigationRecommendation(input);
@@ -40,7 +53,7 @@ const IrrigationCard: FC<IrrigationCardProps> = ({ soilMoisture, evapotranspirat
 
   useEffect(() => {
     fetchRecommendation();
-  }, [soilMoisture.value, evapotranspiration.value, cropType]);
+  }, [soilMoisture.value, airTemperature.value, airHumidity.value, windSpeed.value, luminosity.value, cropType]);
 
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
@@ -59,9 +72,9 @@ const IrrigationCard: FC<IrrigationCardProps> = ({ soilMoisture, evapotranspirat
               <p className="text-2xl font-bold">{soilMoisture.value}<span className="text-lg font-medium">{soilMoisture.unit}</span></p>
             </div>
             <div className="p-4 bg-card-foreground/5 rounded-lg">
-              <CloudDrizzle className="w-6 h-6 mx-auto text-primary mb-2" />
-              <p className="text-sm text-card-foreground/80">Evapotranspiração</p>
-              <p className="text-2xl font-bold">{evapotranspiration.value}<span className="text-lg font-medium">{evapotranspiration.unit}</span></p>
+              <Thermometer className="w-6 h-6 mx-auto text-primary mb-2" />
+              <p className="text-sm text-card-foreground/80">Temp. do Ar</p>
+              <p className="text-2xl font-bold">{airTemperature.value}<span className="text-lg font-medium">{airTemperature.unit}</span></p>
             </div>
           </div>
           

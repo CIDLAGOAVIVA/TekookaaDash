@@ -191,7 +191,10 @@ export default function DashboardClient() {
               <motion.div variants={cardVariants} className="lg:col-span-1">
                  <IrrigationCard 
                     soilMoisture={selectedStationData.sensorData.soilMoisture}
-                    evapotranspiration={selectedStationData.sensorData.evapotranspiration}
+                    airTemperature={selectedStationData.sensorData.airTemperature}
+                    airHumidity={selectedStationData.sensorData.airHumidity}
+                    windSpeed={selectedStationData.sensorData.windSpeed}
+                    luminosity={selectedStationData.sensorData.luminosity}
                     cropType={selectedCrop!.name}
                  />
               </motion.div>

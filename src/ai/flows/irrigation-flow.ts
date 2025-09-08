@@ -12,7 +12,10 @@ import { z } from 'zod';
 
 const IrrigationInputSchema = z.object({
   soilMoisture: z.number().describe('The current soil moisture percentage.'),
-  evapotranspiration: z.number().describe('The current evapotranspiration rate in mm/day.'),
+  airTemperature: z.number().describe('The current air temperature in Celsius.'),
+  airHumidity: z.number().describe('The current air humidity percentage.'),
+  windSpeed: z.number().describe('The current wind speed in km/h.'),
+  luminosity: z.number().describe('The current solar radiation in Lux.'),
   cropType: z.string().describe('The type of crop being cultivated.'),
 });
 
@@ -30,17 +33,25 @@ const irrigationPrompt = ai.definePrompt({
     output: { schema: IrrigationOutputSchema },
     prompt: `
       You are an expert agronomist specializing in irrigation management.
-      Your task is to provide a clear and concise irrigation recommendation based on the following data for a {{cropType}} crop.
-      
-      - Current Soil Moisture: {{soilMoisture}}%
-      - Evapotranspiration (ETc): {{evapotranspiration}} mm/day
+      Your task is to provide a clear and concise irrigation recommendation for a {{cropType}} crop.
 
-      Analyze the data and provide a recommendation.
-      - If soil moisture is critically low (e.g., < 25%), recommend immediate irrigation.
-      - If soil moisture is adequate (e.g., > 40-50%) and evapotranspiration is low, recommend holding off on irrigation.
-      - If soil moisture is borderline and evapotranspiration is high, recommend a light irrigation.
+      First, estimate the evapotranspiration (ETc) rate based on the following data:
+      - Air Temperature: {{airTemperature}}°C
+      - Air Humidity: {{airHumidity}}%
+      - Wind Speed: {{windSpeed}} km/h
+      - Luminosity (Solar Radiation): {{luminosity}} Lux
+
+      A higher temperature, higher wind speed, higher luminosity, and lower humidity will result in a higher ETc. A typical ETc for crops can range from 2 mm/day in cool, humid conditions to 10 mm/day in hot, dry, windy conditions.
+
+      After estimating the ETc, analyze it in conjunction with the soil moisture to provide a recommendation.
+      - Current Soil Moisture: {{soilMoisture}}%
       
-      Your recommendation should be practical and easy to understand for a farm manager. Be direct.
+      Your analysis should follow these rules:
+      - If soil moisture is critically low (e.g., < 25%), recommend immediate irrigation regardless of the estimated ETc.
+      - If soil moisture is adequate (e.g., > 40-50%) and the estimated ETc is low, recommend holding off on irrigation.
+      - If soil moisture is borderline and the estimated ETc is high, recommend a light irrigation to compensate for the expected water loss.
+      
+      Your final recommendation should be practical and easy to understand for a farm manager. Be direct and do not explain your ETc calculation, just provide the final action.
       Start with "Recomendação:"
       
       Example: "Recomendação: A umidade do solo está adequada. Nenhuma irrigação é necessária no momento. Monitore novamente em 24 horas."
