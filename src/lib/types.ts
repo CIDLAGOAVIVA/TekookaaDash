@@ -20,6 +20,7 @@ export interface SensorData {
   nitrogen: SensorMetric;
   phosphorus: SensorMetric;
   potassium: SensorMetric;
+  evapotranspiration: SensorMetric;
 }
 
 export interface HourlyForecast {

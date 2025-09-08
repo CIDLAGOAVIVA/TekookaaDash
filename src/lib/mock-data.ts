@@ -1,5 +1,5 @@
 import type { Property } from '@/lib/types';
-import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater,Sprout } from 'lucide-react';
+import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater,Sprout, CloudDrizzle } from 'lucide-react';
 
 const generateTrend = (base: number, points = 12, fluctuation = 0.1) => {
   return Array.from({ length: points }, (_, i) => ({
@@ -24,6 +24,7 @@ const station1: Property['crops'][0]['stations'][0] = {
     nitrogen: { name: 'Nitrogênio (N)', value: 120, unit: 'kg/ha', trend: generateTrend(120), icon: Sprout },
     phosphorus: { name: 'Fósforo (P)', value: 80, unit: 'kg/ha', trend: generateTrend(80), icon: Leaf },
     potassium: { name: 'Potássio (K)', value: 150, unit: 'kg/ha', trend: generateTrend(150), icon: Leaf },
+    evapotranspiration: { name: 'Evapotranspiração', value: 3.2, unit: 'mm/dia', trend: generateTrend(3.2), icon: CloudDrizzle },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({
@@ -74,6 +75,7 @@ const station2: Property['crops'][0]['stations'][0] = {
     nitrogen: { name: 'Nitrogênio (N)', value: 140, unit: 'kg/ha', trend: generateTrend(140), icon: Sprout },
     phosphorus: { name: 'Fósforo (P)', value: 90, unit: 'kg/ha', trend: generateTrend(90), icon: Leaf },
     potassium: { name: 'Potássio (K)', value: 160, unit: 'kg/ha', trend: generateTrend(160), icon: Leaf },
+    evapotranspiration: { name: 'Evapotranspiração', value: 4.1, unit: 'mm/dia', trend: generateTrend(4.1), icon: CloudDrizzle },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({

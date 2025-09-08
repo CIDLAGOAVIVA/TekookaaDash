@@ -17,6 +17,7 @@ import ActivityProgressCard from './ActivityProgressCard';
 import { Tractor, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import IrrigationCard from './IrrigationCard';
 
 const SkeletonCard = () => (
   <Card className="rounded-2xl">
@@ -188,10 +189,17 @@ export default function DashboardClient() {
                 />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-1">
-                 <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
+                 <IrrigationCard 
+                    soilMoisture={selectedStationData.sensorData.soilMoisture}
+                    evapotranspiration={selectedStationData.sensorData.evapotranspiration}
+                    cropType={selectedCrop!.name}
+                 />
               </motion.div>
-              <motion.div variants={cardVariants} className="lg:col-span-1">
+               <motion.div variants={cardVariants} className="lg:col-span-1">
                  <ActivityProgressCard activities={selectedStationData.activityProgress} />
+              </motion.div>
+              <motion.div variants={cardVariants} className="lg:col-span-4">
+                 <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
               </motion.div>
                <motion.div variants={cardVariants} className="lg:col-span-4">
                 <AlertsLogCard alerts={selectedStationData.alertsLog} />
