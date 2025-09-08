@@ -3,7 +3,7 @@
 import type { FC } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Droplets, Thermometer, BrainCircuit } from 'lucide-react';
+import { Droplets, Thermometer, BrainCircuit, Wind, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { SensorMetric } from '@/lib/types';
@@ -16,6 +16,21 @@ interface IrrigationCardProps {
   windSpeed: SensorMetric;
   luminosity: SensorMetric;
   cropType: string;
+}
+
+const MetricItem: FC<{ metric: SensorMetric }> = ({ metric }) => {
+    const Icon = metric.icon;
+    return (
+        <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-2 text-card-foreground/80">
+                <Icon className="w-4 h-4" />
+                <span>{metric.name}</span>
+            </div>
+            <span className="font-semibold text-card-foreground">
+                {metric.value.toLocaleString()} {metric.unit}
+            </span>
+        </div>
+    )
 }
 
 const IrrigationCard: FC<IrrigationCardProps> = ({ 
@@ -65,18 +80,13 @@ const IrrigationCard: FC<IrrigationCardProps> = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-4 bg-card-foreground/5 rounded-lg">
-              <Droplets className="w-6 h-6 mx-auto text-primary mb-2" />
-              <p className="text-sm text-card-foreground/80">Umidade do Solo</p>
-              <p className="text-2xl font-bold">{soilMoisture.value}<span className="text-lg font-medium">{soilMoisture.unit}</span></p>
+            <div className="space-y-2 p-4 bg-card-foreground/5 rounded-lg">
+                <MetricItem metric={soilMoisture} />
+                <MetricItem metric={airTemperature} />
+                <MetricItem metric={airHumidity} />
+                <MetricItem metric={windSpeed} />
+                <MetricItem metric={luminosity} />
             </div>
-            <div className="p-4 bg-card-foreground/5 rounded-lg">
-              <Thermometer className="w-6 h-6 mx-auto text-primary mb-2" />
-              <p className="text-sm text-card-foreground/80">Temp. do Ar</p>
-              <p className="text-2xl font-bold">{airTemperature.value}<span className="text-lg font-medium">{airTemperature.unit}</span></p>
-            </div>
-          </div>
           
           <div className="p-4 bg-primary/10 rounded-lg">
             <div className="flex items-start gap-3">

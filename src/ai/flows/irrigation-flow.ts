@@ -33,25 +33,20 @@ const irrigationPrompt = ai.definePrompt({
     output: { schema: IrrigationOutputSchema },
     prompt: `
       You are an expert agronomist specializing in irrigation management.
-      Your task is to provide a clear and concise irrigation recommendation for a {{cropType}} crop.
+      Your task is to provide a clear and concise irrigation recommendation for a {{cropType}} crop based on the following real-time data:
 
-      First, estimate the evapotranspiration (ETc) rate based on the following data:
+      - Soil Moisture: {{soilMoisture}}%
       - Air Temperature: {{airTemperature}}°C
       - Air Humidity: {{airHumidity}}%
       - Wind Speed: {{windSpeed}} km/h
       - Luminosity (Solar Radiation): {{luminosity}} Lux
 
-      A higher temperature, higher wind speed, higher luminosity, and lower humidity will result in a higher ETc. A typical ETc for crops can range from 2 mm/day in cool, humid conditions to 10 mm/day in hot, dry, windy conditions.
-
-      After estimating the ETc, analyze it in conjunction with the soil moisture to provide a recommendation.
-      - Current Soil Moisture: {{soilMoisture}}%
+      Analyze the data and provide a direct recommendation. Your analysis should follow these rules:
+      - If soil moisture is critically low (e.g., < 25%), recommend immediate irrigation.
+      - If soil moisture is adequate (e.g., > 40-50%) and weather conditions (low temperature, high humidity, low wind/luminosity) don't favor water loss, recommend holding off on irrigation.
+      - If soil moisture is borderline and weather conditions favor water loss (high temperature, low humidity, high wind/luminosity), recommend irrigation to compensate.
       
-      Your analysis should follow these rules:
-      - If soil moisture is critically low (e.g., < 25%), recommend immediate irrigation regardless of the estimated ETc.
-      - If soil moisture is adequate (e.g., > 40-50%) and the estimated ETc is low, recommend holding off on irrigation.
-      - If soil moisture is borderline and the estimated ETc is high, recommend a light irrigation to compensate for the expected water loss.
-      
-      Your final recommendation should be practical and easy to understand for a farm manager. Be direct and do not explain your ETc calculation, just provide the final action.
+      Your final recommendation should be practical and easy to understand for a farm manager. Be direct.
       Start with "Recomendação:"
       
       Example: "Recomendação: A umidade do solo está adequada. Nenhuma irrigação é necessária no momento. Monitore novamente em 24 horas."
