@@ -65,7 +65,7 @@ interface SensorMetricsCardProps {
 
 const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
   return (
-    <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
+    <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none transition-all duration-200 hover:scale-[1.01] hover:shadow-xl">
       <CardHeader>
         <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
       </CardHeader>

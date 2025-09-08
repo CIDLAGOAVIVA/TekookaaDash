@@ -174,7 +174,9 @@ export default function DashboardClient() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
-                <SensorMetricsCard sensorData={selectedStationData.sensorData} />
+                 <Link href={`/metrics?stationId=${selectedStationId}`}>
+                    <SensorMetricsCard sensorData={selectedStationData.sensorData} />
+                 </Link>
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">
                 <WeatherForecastCard forecast={selectedStationData.weatherForecast} />
