@@ -16,8 +16,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 
 const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
   return (
-    <Card className="bg-card text-card-foreground border-none rounded-2xl shadow-lg">
-      <CardHeader>
+    <Card className="bg-card text-card-foreground border-none rounded-2xl shadow-lg h-full flex flex-col">
+      <CardHeader className="pb-2">
         <CardTitle className="text-xl flex items-center gap-2">
           <metric.icon className="w-6 h-6 text-primary" />
           {metric.name}
@@ -26,8 +26,8 @@ const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
           Últimos 7 dias
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="h-64">
+      <CardContent className="flex-1 flex flex-col">
+        <div className="h-64 sm:h-56 md:h-64">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={metric.trend} margin={{ top: 5, right: 20, left: 10, bottom: 20 }}>
               <defs>
@@ -40,18 +40,17 @@ const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
               <XAxis
                 dataKey="time"
                 stroke="hsl(var(--foreground) / 0.7)"
-                tick={{ fill: 'hsl(var(--foreground) / 0.9)' }}
+                tick={{ fill: 'white' }}
                 tickLine={{ stroke: 'hsl(var(--border))' }}
               >
-                <Label value="Dias" offset={-15} position="insideBottom" fill="hsl(var(--foreground) / 0.9)" />
+                <Label value="Dias" offset={-15} position="insideBottom" fill="white" />
               </XAxis>
               <YAxis
                 stroke="hsl(var(--foreground) / 0.7)"
-                unit={metric.unit}
-                tick={{ fill: 'hsl(var(--foreground) / 0.9)' }}
+                tick={{ fill: 'white' }}
                 tickLine={{ stroke: 'hsl(var(--border))' }}
               >
-                <Label value={metric.unit} angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: 'hsl(var(--foreground) / 0.9)' }} />
+                <Label value={metric.unit} angle={-90} position="insideLeft" style={{ textAnchor: 'middle', fill: 'white' }} />
               </YAxis>
               <Tooltip
                 contentStyle={{
@@ -73,7 +72,7 @@ const MetricChartCard: React.FC<{ metric: SensorMetric }> = ({ metric }) => {
             </AreaChart>
           </ResponsiveContainer>
         </div>
-        <div className="mt-6">
+        <div className="mt-4 flex-1">
           <h4 className="font-semibold mb-2">Histórico de Dados</h4>
           <div className="max-h-48 overflow-y-auto rounded-lg border">
             <Table>
@@ -258,7 +257,7 @@ export default function MetricsClientPage() {
         </div>
 
         {filteredMetrics.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredMetrics.map(metric => (
               <MetricChartCard key={metric.name} metric={metric} />
             ))}
