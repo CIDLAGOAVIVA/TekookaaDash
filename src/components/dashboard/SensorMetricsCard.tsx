@@ -37,7 +37,6 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
   );
 };
 
-
 const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
   const Icon = metric.icon;
   return (
@@ -47,9 +46,9 @@ const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
           <span className="text-sm text-card-foreground/80">{metric.name}</span>
           <Icon className="w-5 h-5 text-primary" />
         </div>
-        <div className="text-3xl font-bold text-card-foreground">
+        <div className="text-2xl font-bold text-card-foreground">
           {metric.value.toLocaleString()}
-          <span className="text-lg font-medium text-card-foreground/60 ml-1">{metric.unit}</span>
+          <span className="text-base font-medium text-card-foreground/60 ml-1">{metric.unit}</span>
         </div>
       </div>
       <div className="mt-2">
@@ -65,23 +64,24 @@ interface SensorMetricsCardProps {
 
 const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
   return (
-    <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none transition-all duration-200 hover:scale-[1.01] hover:shadow-xl">
+    <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none transition-all duration-200 hover:shadow-xl">
       <CardHeader>
         <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-12 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <MetricDisplay metric={sensorData.soilMoisture} />
           <MetricDisplay metric={sensorData.airTemperature} />
-          <MetricDisplay metric={sensorData.soilPH} />
-          <MetricDisplay metric={sensorData.luminosity} />
           <MetricDisplay metric={sensorData.airHumidity} />
-          <MetricDisplay metric={sensorData.windSpeed} />
           <MetricDisplay metric={sensorData.soilTemperature} />
+          <MetricDisplay metric={sensorData.soilPH} />
+          <MetricDisplay metric={sensorData.windSpeed} />
+          <MetricDisplay metric={sensorData.luminosity} />
           <MetricDisplay metric={sensorData.electricalConductivity} />
           <MetricDisplay metric={sensorData.nitrogen} />
           <MetricDisplay metric={sensorData.phosphorus} />
           <MetricDisplay metric={sensorData.potassium} />
+          <MetricDisplay metric={sensorData.evapotranspiration} />
         </div>
       </CardContent>
     </Card>
