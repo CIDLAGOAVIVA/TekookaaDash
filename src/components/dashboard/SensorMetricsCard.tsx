@@ -39,24 +39,24 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
 
 
 const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
-    const Icon = metric.icon;
-    return (
-        <div className="flex flex-col justify-between p-4 bg-card-foreground/5 rounded-lg h-full">
-            <div>
-                <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-card-foreground/80">{metric.name}</span>
-                    <Icon className="w-5 h-5 text-primary" />
-                </div>
-                <div className="text-3xl font-bold text-card-foreground">
-                    {metric.value.toLocaleString()}
-                    <span className="text-lg font-medium text-card-foreground/60 ml-1">{metric.unit}</span>
-                </div>
-            </div>
-            <div className="mt-2">
-                <MiniChart data={metric.trend} />
-            </div>
+  const Icon = metric.icon;
+  return (
+    <div className="flex flex-col justify-between p-4 bg-card-foreground/5 rounded-lg h-full">
+      <div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-sm text-card-foreground/80">{metric.name}</span>
+          <Icon className="w-5 h-5 text-primary" />
         </div>
-    );
+        <div className="text-3xl font-bold text-card-foreground">
+          {metric.value.toLocaleString()}
+          <span className="text-lg font-medium text-card-foreground/60 ml-1">{metric.unit}</span>
+        </div>
+      </div>
+      <div className="mt-2">
+        <MiniChart data={metric.trend} />
+      </div>
+    </div>
+  );
 }
 
 interface SensorMetricsCardProps {
@@ -82,7 +82,6 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
           <MetricDisplay metric={sensorData.nitrogen} />
           <MetricDisplay metric={sensorData.phosphorus} />
           <MetricDisplay metric={sensorData.potassium} />
-          <MetricDisplay metric={sensorData.evapotranspiration} />
         </div>
       </CardContent>
     </Card>

@@ -66,7 +66,7 @@ export default function DashboardClient() {
       setSelectedStationId(null);
     }
   }, [selectedCropId, availableStations]);
-  
+
   useEffect(() => {
     if (selectedStationId) {
       setIsLoading(true);
@@ -174,9 +174,9 @@ export default function DashboardClient() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
-                 <Link href={`/metrics?stationId=${selectedStationId}`}>
-                    <SensorMetricsCard sensorData={selectedStationData.sensorData} />
-                 </Link>
+                <Link href={`/metrics?stationId=${selectedStationId}`}>
+                  <SensorMetricsCard sensorData={selectedStationData.sensorData} />
+                </Link>
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">
                 <WeatherForecastCard forecast={selectedStationData.weatherForecast} />
@@ -184,29 +184,30 @@ export default function DashboardClient() {
               <motion.div variants={cardVariants} className="lg:col-span-2">
                 <AlertingSensorsCard sensors={selectedStationData.alertingSensors} />
               </motion.div>
-               <motion.div variants={cardVariants} className="lg:col-span-2">
-                <PropertyMapCard 
-                  station={selectedStationData} 
-                  property={selectedProperty!} 
+              <motion.div variants={cardVariants} className="lg:col-span-2">
+                <PropertyMapCard
+                  station={selectedStationData}
+                  property={selectedProperty!}
                 />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-1">
-                 <IrrigationCard 
-                    soilMoisture={selectedStationData.sensorData.soilMoisture}
-                    airTemperature={selectedStationData.sensorData.airTemperature}
-                    airHumidity={selectedStationData.sensorData.airHumidity}
-                    windSpeed={selectedStationData.sensorData.windSpeed}
-                    luminosity={selectedStationData.sensorData.luminosity}
-                    cropType={selectedCrop!.name}
-                 />
+                <IrrigationCard
+                  soilMoisture={selectedStationData.sensorData.soilMoisture}
+                  airTemperature={selectedStationData.sensorData.airTemperature}
+                  airHumidity={selectedStationData.sensorData.airHumidity}
+                  windSpeed={selectedStationData.sensorData.windSpeed}
+                  luminosity={selectedStationData.sensorData.luminosity}
+                  evapotranspiration={selectedStationData.sensorData.evapotranspiration}
+                  cropType={selectedCrop!.name}
+                />
               </motion.div>
-               <motion.div variants={cardVariants} className="lg:col-span-1">
-                 <ActivityProgressCard activities={selectedStationData.activityProgress} />
+              <motion.div variants={cardVariants} className="lg:col-span-1">
+                <ActivityProgressCard activities={selectedStationData.activityProgress} />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-4">
-                 <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
+                <CameraFeedCard imageUrl={selectedStationData.cameraImageUrl} timestamp={selectedStationData.cameraTimestamp} />
               </motion.div>
-               <motion.div variants={cardVariants} className="lg:col-span-4">
+              <motion.div variants={cardVariants} className="lg:col-span-4">
                 <AlertsLogCard alerts={selectedStationData.alertsLog} />
               </motion.div>
             </motion.div>
@@ -220,9 +221,9 @@ export default function DashboardClient() {
             >
               <Card className="max-w-md mx-auto rounded-2xl shadow-lg bg-card text-card-foreground border-none">
                 <CardContent className="p-8 flex flex-col items-center">
-                    <Tractor className="w-16 h-16 text-primary mb-4" />
-                    <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao AgroDash</h2>
-                    <p className="text-card-foreground/80">Por favor, faça uma seleção acima para visualizar os dados do painel.</p>
+                  <Tractor className="w-16 h-16 text-primary mb-4" />
+                  <h2 className="text-2xl font-semibold mb-2">Bem-vindo ao AgroDash</h2>
+                  <p className="text-card-foreground/80">Por favor, faça uma seleção acima para visualizar os dados do painel.</p>
                 </CardContent>
               </Card>
             </motion.div>
