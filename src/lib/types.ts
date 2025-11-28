@@ -21,6 +21,10 @@ export interface SensorData {
   phosphorus: SensorMetric;
   potassium: SensorMetric;
   evapotranspiration: SensorMetric;
+  windDirection: SensorMetric;
+  windDirectionQuadrant: SensorMetric;
+  airCO2: SensorMetric;
+  rainIndicator: SensorMetric;
 }
 
 export interface HourlyForecast {

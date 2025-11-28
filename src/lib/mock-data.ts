@@ -1,5 +1,5 @@
 import type { Property } from '@/lib/types';
-import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater,Sprout, CloudDrizzle } from 'lucide-react';
+import { Thermometer, Droplets, FlaskConical, Sun, Wind, Leaf, Zap, Heater, Sprout, CloudDrizzle, Navigation, Compass, CloudRain, Cloud } from 'lucide-react';
 
 const generateTrend = (base: number, points = 7, fluctuation = 0.1) => {
   return Array.from({ length: points }, (_, i) => ({
@@ -16,7 +16,7 @@ const station1: Property['crops'][0]['stations'][0] = {
     soilMoisture: { name: 'Umidade do Solo', value: 35, unit: '%', trend: generateTrend(35), icon: Droplets },
     airTemperature: { name: 'Temperatura do Ar', value: 24, unit: '°C', trend: generateTrend(24), icon: Thermometer },
     soilPH: { name: 'pH do Solo', value: 6.8, unit: '', trend: generateTrend(6.8), icon: FlaskConical },
-    luminosity: { name: 'Luminosidade', value: 55000, unit: 'Lux', trend: generateTrend(55000), icon: Sun },
+    luminosity: { name: 'Ultravioleta', value: 55000, unit: 'Lux', trend: generateTrend(55000), icon: Sun },
     airHumidity: { name: 'Umidade do Ar', value: 60, unit: '%', trend: generateTrend(60), icon: Droplets },
     windSpeed: { name: 'Velocidade do Vento', value: 15, unit: 'km/h', trend: generateTrend(15), icon: Wind },
     soilTemperature: { name: 'Temperatura do Solo', value: 22, unit: '°C', trend: generateTrend(22), icon: Heater },
@@ -24,7 +24,11 @@ const station1: Property['crops'][0]['stations'][0] = {
     nitrogen: { name: 'Nitrogênio (N)', value: 120, unit: 'kg/ha', trend: generateTrend(120), icon: Sprout },
     phosphorus: { name: 'Fósforo (P)', value: 80, unit: 'kg/ha', trend: generateTrend(80), icon: Leaf },
     potassium: { name: 'Potássio (K)', value: 150, unit: 'kg/ha', trend: generateTrend(150), icon: Leaf },
-    evapotranspiration: { name: 'Evapotranspiração', value: 3.2, unit: 'mm/dia', trend: generateTrend(3.2), icon: CloudDrizzle },
+    evapotranspiration: { name: 'Precipitação', value: 3.2, unit: 'mm/dia', trend: generateTrend(3.2), icon: CloudDrizzle },
+    windDirection: { name: 'Direção do Vento', value: 225, unit: '°', trend: generateTrend(225, 7, 0.2), icon: Navigation },
+    windDirectionQuadrant: { name: 'Quadrante do Vento', value: 3, unit: '', trend: generateTrend(3, 7, 0.3), icon: Compass },
+    airCO2: { name: 'CO₂ no Ar', value: 410, unit: 'ppm', trend: generateTrend(410), icon: Cloud },
+    rainIndicator: { name: 'Indicador de Chuva', value: 1, unit: '', trend: generateTrend(1, 7, 1), icon: CloudRain },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({
@@ -67,7 +71,7 @@ const station2: Property['crops'][0]['stations'][0] = {
     soilMoisture: { name: 'Umidade do Solo', value: 45, unit: '%', trend: generateTrend(45), icon: Droplets },
     airTemperature: { name: 'Temperatura do Ar', value: 26, unit: '°C', trend: generateTrend(26), icon: Thermometer },
     soilPH: { name: 'pH do Solo', value: 6.5, unit: '', trend: generateTrend(6.5), icon: FlaskConical },
-    luminosity: { name: 'Luminosidade', value: 62000, unit: 'Lux', trend: generateTrend(62000), icon: Sun },
+    luminosity: { name: 'Ultravioleta', value: 62000, unit: 'Lux', trend: generateTrend(62000), icon: Sun },
     airHumidity: { name: 'Umidade do Ar', value: 55, unit: '%', trend: generateTrend(55), icon: Droplets },
     windSpeed: { name: 'Velocidade do Vento', value: 12, unit: 'km/h', trend: generateTrend(12), icon: Wind },
     soilTemperature: { name: 'Temperatura do Solo', value: 24, unit: '°C', trend: generateTrend(24), icon: Heater },
@@ -75,7 +79,11 @@ const station2: Property['crops'][0]['stations'][0] = {
     nitrogen: { name: 'Nitrogênio (N)', value: 140, unit: 'kg/ha', trend: generateTrend(140), icon: Sprout },
     phosphorus: { name: 'Fósforo (P)', value: 90, unit: 'kg/ha', trend: generateTrend(90), icon: Leaf },
     potassium: { name: 'Potássio (K)', value: 160, unit: 'kg/ha', trend: generateTrend(160), icon: Leaf },
-    evapotranspiration: { name: 'Evapotranspiração', value: 4.1, unit: 'mm/dia', trend: generateTrend(4.1), icon: CloudDrizzle },
+    evapotranspiration: { name: 'Precipitação', value: 4.1, unit: 'mm/dia', trend: generateTrend(4.1), icon: CloudDrizzle },
+    windDirection: { name: 'Direção do Vento', value: 180, unit: '°', trend: generateTrend(180, 7, 0.2), icon: Navigation },
+    windDirectionQuadrant: { name: 'Quadrante do Vento', value: 2, unit: '', trend: generateTrend(2, 7, 0.3), icon: Compass },
+    airCO2: { name: 'CO₂ no Ar', value: 420, unit: 'ppm', trend: generateTrend(420), icon: Cloud },
+    rainIndicator: { name: 'Indicador de Chuva', value: 0, unit: '', trend: generateTrend(0, 7, 1), icon: CloudRain },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({

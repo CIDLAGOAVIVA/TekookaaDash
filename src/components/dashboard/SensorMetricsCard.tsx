@@ -76,12 +76,16 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
           <MetricDisplay metric={sensorData.soilTemperature} />
           <MetricDisplay metric={sensorData.soilPH} />
           <MetricDisplay metric={sensorData.windSpeed} />
+          <MetricDisplay metric={sensorData.windDirection} />
+          <MetricDisplay metric={sensorData.windDirectionQuadrant} />
           <MetricDisplay metric={sensorData.luminosity} />
           <MetricDisplay metric={sensorData.electricalConductivity} />
           <MetricDisplay metric={sensorData.nitrogen} />
           <MetricDisplay metric={sensorData.phosphorus} />
           <MetricDisplay metric={sensorData.potassium} />
           <MetricDisplay metric={sensorData.evapotranspiration} />
+          <MetricDisplay metric={sensorData.airCO2} />
+          <MetricDisplay metric={sensorData.rainIndicator} />
         </div>
       </CardContent>
     </Card>
