@@ -1,11 +1,13 @@
 "use client";
 
 import type { FC } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import type { SensorData, SensorMetric } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { Activity } from 'lucide-react';
 
 interface MiniChartProps {
   data: { time: string; value: number }[];
@@ -39,6 +41,9 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
 
 const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
   const Icon = metric.icon;
+  if (!Icon) {
+    return null; // Skip rendering if icon is undefined
+  }
   return (
     <div className="flex flex-col justify-between p-4 bg-card-foreground/5 rounded-lg h-full">
       <div>
@@ -63,29 +68,49 @@ interface SensorMetricsCardProps {
 }
 
 const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
+  const [lastUpdate, setLastUpdate] = useState<string>('agora');
+  const [isLive, setIsLive] = useState(true);
+
+  useEffect(() => {
+    // Mostrar indicador de atualização em tempo real
+    const timer = setInterval(() => {
+      setLastUpdate(new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none transition-all duration-200 hover:shadow-xl">
       <CardHeader>
-        <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
+          <div className="flex items-center gap-2 text-sm">
+            <div className="flex items-center gap-1">
+              <Activity className="w-4 h-4 text-green-500 animate-pulse" />
+              <span className="text-card-foreground/60">Em tempo real</span>
+            </div>
+            <span className="text-card-foreground/40 text-xs">{lastUpdate}</span>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <MetricDisplay metric={sensorData.soilMoisture} />
           <MetricDisplay metric={sensorData.airTemperature} />
           <MetricDisplay metric={sensorData.airHumidity} />
-          <MetricDisplay metric={sensorData.soilTemperature} />
+          <MetricDisplay metric={sensorData.soilMoisture} />
           <MetricDisplay metric={sensorData.soilPH} />
-          <MetricDisplay metric={sensorData.windSpeed} />
-          <MetricDisplay metric={sensorData.windDirection} />
-          <MetricDisplay metric={sensorData.windDirectionQuadrant} />
-          <MetricDisplay metric={sensorData.luminosity} />
           <MetricDisplay metric={sensorData.electricalConductivity} />
           <MetricDisplay metric={sensorData.nitrogen} />
           <MetricDisplay metric={sensorData.phosphorus} />
           <MetricDisplay metric={sensorData.potassium} />
-          <MetricDisplay metric={sensorData.evapotranspiration} />
-          <MetricDisplay metric={sensorData.airCO2} />
-          <MetricDisplay metric={sensorData.rainIndicator} />
+          <MetricDisplay metric={sensorData.co2} />
+          <MetricDisplay metric={sensorData.windSpeed} />
+          <MetricDisplay metric={sensorData.windDirection} />
+          <MetricDisplay metric={sensorData.windQuadrant} />
+          <MetricDisplay metric={sensorData.precipitation} />
+          <MetricDisplay metric={sensorData.rainDetection} />
+          <MetricDisplay metric={sensorData.ultravioletIndex} />
         </div>
       </CardContent>
     </Card>

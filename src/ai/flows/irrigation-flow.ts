@@ -118,5 +118,45 @@ const irrigationFlow = ai.defineFlow(
 );
 
 export async function getIrrigationRecommendation(input: IrrigationInput): Promise<IrrigationOutput> {
+  // Verificar se a API key está configurada antes de chamar o Genkit
+  const hasApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  
+  if (!hasApiKey) {
+    // Retornar uma recomendação fallback quando não há API key
+    // Ainda calcula a evapotranspiração localmente
+    const latitude = input.latitude ?? -15.78;
+    const tempMean = input.airTemperature;
+    const tempMin = input.tempMin ?? (tempMean - 5);
+    const tempMax = input.tempMax ?? (tempMean + 5);
+    const dayOfYear = getCurrentDayOfYear();
+    const solarRadiation = luxToSolarRadiation(input.luminosity);
+    
+    const calculatedET = input.evapotranspiration ?? calculateEvapotranspiration(
+      tempMean,
+      tempMax,
+      tempMin,
+      latitude,
+      dayOfYear,
+      solarRadiation
+    );
+
+    // Gerar recomendação simples baseada em regras
+    let recommendation = 'Recomendação: ';
+    if (input.soilMoisture < 25) {
+      recommendation += `Umidade do solo crítica (${input.soilMoisture}%). Irrigação imediata recomendada.`;
+    } else if (input.soilMoisture > 50) {
+      recommendation += `Umidade do solo adequada (${input.soilMoisture}%). Nenhuma irrigação necessária no momento.`;
+    } else if (input.airTemperature > 30 && input.airHumidity < 40) {
+      recommendation += `Condições de alta evaporação. Considere irrigar preventivamente.`;
+    } else {
+      recommendation += `Monitore a umidade do solo. Irrigação pode ser necessária em breve.`;
+    }
+
+    return {
+      recommendation,
+      calculatedET
+    };
+  }
+
   return irrigationFlow(input);
 }

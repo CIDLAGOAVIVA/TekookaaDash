@@ -3,8 +3,6 @@
 import type { FC } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Droplets, Thermometer, BrainCircuit, Wind, Sun, CloudDrizzle } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { SensorMetric } from '@/lib/types';
 import { getIrrigationRecommendation, type IrrigationInput } from '@/ai/flows/irrigation-flow';
 
@@ -13,13 +11,15 @@ interface IrrigationCardProps {
   airTemperature: SensorMetric;
   airHumidity: SensorMetric;
   windSpeed: SensorMetric;
-  luminosity: SensorMetric;
+  ultravioletIndex: SensorMetric;
   cropType: string;
-  evapotranspiration?: SensorMetric;
 }
 
 const MetricItem: FC<{ metric: SensorMetric }> = ({ metric }) => {
   const Icon = metric.icon;
+  if (!Icon) {
+    return null; // Skip if icon is undefined
+  }
   return (
     <div className="flex items-center justify-between text-sm">
       <div className="flex items-center gap-2 text-card-foreground/80">
@@ -38,21 +38,12 @@ const IrrigationCard: FC<IrrigationCardProps> = ({
   airTemperature,
   airHumidity,
   windSpeed,
-  luminosity,
+  ultravioletIndex,
   cropType,
-  evapotranspiration,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // Create a dynamic evapotranspiration metric that can update with calculated values
-  const [etMetric, setEtMetric] = useState<SensorMetric>({
-    name: 'Evapotranspiração',
-    value: evapotranspiration?.value || 0,
-    unit: 'mm/dia',
-    trend: evapotranspiration?.trend || { direction: 'neutral', percentage: 0 },
-    icon: CloudDrizzle,
-  });
-
+  // UV Index pode ser usado como proxy para luminosidade
   const fetchEvapotranspiration = async () => {
     setIsLoading(true);
     try {
@@ -61,22 +52,15 @@ const IrrigationCard: FC<IrrigationCardProps> = ({
         airTemperature: airTemperature.value,
         airHumidity: airHumidity.value,
         windSpeed: windSpeed.value,
-        luminosity: luminosity.value,
+        luminosity: ultravioletIndex.value, // Usar UV index como proxy
         cropType,
       };
 
       const result = await getIrrigationRecommendation(input);
-
-      // Update with calculated ET value
-      if (result.calculatedET) {
-        // Update the ET metric with the calculated value
-        setEtMetric(prevMetric => ({
-          ...prevMetric,
-          value: result.calculatedET
-        }));
-      }
+      // Resultado da IA pode ser usado para recomendações
+      console.log('Irrigação recomendada:', result);
     } catch (error) {
-      console.error('Failed to get evapotranspiration calculation:', error);
+      console.error('Failed to get irrigation recommendation:', error);
     } finally {
       setIsLoading(false);
     }
@@ -89,22 +73,9 @@ const IrrigationCard: FC<IrrigationCardProps> = ({
     airTemperature.value,
     airHumidity.value,
     windSpeed.value,
-    luminosity.value,
+    ultravioletIndex.value,
     cropType,
-    // Only include evapotranspiration value if it exists
-    evapotranspiration?.value
   ]);
-
-  // Update ET metric when evapotranspiration prop changes
-  useEffect(() => {
-    if (evapotranspiration) {
-      setEtMetric(prevMetric => ({
-        ...prevMetric,
-        value: evapotranspiration.value,
-        trend: evapotranspiration.trend
-      }));
-    }
-  }, [evapotranspiration]);
 
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none">
@@ -121,18 +92,7 @@ const IrrigationCard: FC<IrrigationCardProps> = ({
             <MetricItem metric={airTemperature} />
             <MetricItem metric={airHumidity} />
             <MetricItem metric={windSpeed} />
-            <MetricItem metric={luminosity} />
-            {isLoading ? (
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2 text-card-foreground/80">
-                  <CloudDrizzle className="w-4 h-4" />
-                  <span>Evapotranspiração</span>
-                </div>
-                <Skeleton className="h-4 w-16" />
-              </div>
-            ) : (
-              <MetricItem metric={etMetric} />
-            )}
+            <MetricItem metric={ultravioletIndex} />
           </div>
         </div>
       </CardContent>

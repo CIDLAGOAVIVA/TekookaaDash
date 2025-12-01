@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { mockData } from '@/lib/mock-data';
+import { useDashboardData } from '@/hooks/use-dashboard-data';
+import { useStationMetrics } from '@/hooks/use-station-metrics';
 import type { Property, Crop, Station } from '@/lib/types';
 import SensorMetricsCard from './SensorMetricsCard';
 import WeatherForecastCard from './WeatherForecastCard';
@@ -32,11 +33,14 @@ const SkeletonCard = () => (
 );
 
 export default function DashboardClient() {
-  const [properties] = useState<Property[]>(mockData);
+  const { properties, loading, error } = useDashboardData();
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
   const [selectedCropId, setSelectedCropId] = useState<string | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Carregar métricas da estação selecionada
+  const { sensorData: stationMetrics, loading: metricsLoading } = useStationMetrics(selectedStationId);
 
   const selectedProperty = useMemo(() => properties.find(p => p.id === selectedPropertyId), [properties, selectedPropertyId]);
   const availableCrops = useMemo(() => selectedProperty?.crops || [], [selectedProperty]);
@@ -175,7 +179,7 @@ export default function DashboardClient() {
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
                 <Link href={`/metrics?stationId=${selectedStationId}`}>
-                  <SensorMetricsCard sensorData={selectedStationData.sensorData} />
+                  <SensorMetricsCard sensorData={{ ...selectedStationData.sensorData, ...stationMetrics }} />
                 </Link>
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">
@@ -196,8 +200,7 @@ export default function DashboardClient() {
                   airTemperature={selectedStationData.sensorData.airTemperature}
                   airHumidity={selectedStationData.sensorData.airHumidity}
                   windSpeed={selectedStationData.sensorData.windSpeed}
-                  luminosity={selectedStationData.sensorData.luminosity}
-                  evapotranspiration={selectedStationData.sensorData.evapotranspiration}
+                  ultravioletIndex={selectedStationData.sensorData.ultravioletIndex}
                   cropType={selectedCrop!.name}
                 />
               </motion.div>

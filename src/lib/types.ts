@@ -9,22 +9,21 @@ export interface SensorMetric {
 }
 
 export interface SensorData {
-  soilMoisture: SensorMetric;
   airTemperature: SensorMetric;
-  soilPH: SensorMetric;
-  luminosity: SensorMetric;
-  airHumidity: SensorMetric;
-  windSpeed: SensorMetric;
-  soilTemperature: SensorMetric;
   electricalConductivity: SensorMetric;
+  soilPH: SensorMetric;
   nitrogen: SensorMetric;
   phosphorus: SensorMetric;
   potassium: SensorMetric;
-  evapotranspiration: SensorMetric;
+  co2: SensorMetric;
+  precipitation: SensorMetric;
+  rainDetection: SensorMetric;
+  soilMoisture: SensorMetric;
+  ultravioletIndex: SensorMetric;
+  windSpeed: SensorMetric;
+  windQuadrant: SensorMetric;
   windDirection: SensorMetric;
-  windDirectionQuadrant: SensorMetric;
-  airCO2: SensorMetric;
-  rainIndicator: SensorMetric;
+  airHumidity: SensorMetric;
 }
 
 export interface HourlyForecast {
