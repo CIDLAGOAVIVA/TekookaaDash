@@ -39,7 +39,10 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
   );
 };
 
-const MetricDisplay: FC<{ metric: SensorMetric }> = ({ metric }) => {
+const MetricDisplay: FC<{ metric: SensorMetric | undefined }> = ({ metric }) => {
+  if (!metric) {
+    return null;
+  }
   const Icon = metric.icon;
   if (!Icon) {
     return null; // Skip rendering if icon is undefined
