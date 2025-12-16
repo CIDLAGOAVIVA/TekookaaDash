@@ -1,0 +1,11 @@
+   ▲ Next.js 15.3.3 (Turbopack)
+   - Local:        http://localhost:8537
+   - Network:      http://177.129.9.194:8537
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 933ms
+ ○ Compiling /api/station-metrics/[stationId] ...
+ ✓ Compiled /api/station-metrics/[stationId] in 918ms
+ GET /api/station-metrics/8 200 in 1561ms
+ GET /api/station-metrics/8 200 in 89ms
