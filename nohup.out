@@ -1,85 +1,5 @@
 nohup: ignorando entrada
 
-> nextn@0.1.0 build
-> next build
-
-   ▲ Next.js 15.3.3
-   - Environments: .env
-
-   Creating an optimized production build ...
- ⚠ Compiled with warnings in 6.0s
-
-./node_modules/handlebars/lib/index.js
-require.extensions is not supported by webpack. Use a loader instead.
-
-Import trace for requested module:
-./node_modules/handlebars/lib/index.js
-./node_modules/dotprompt/dist/index.js
-./node_modules/@genkit-ai/core/lib/registry.js
-./node_modules/genkit/lib/registry.js
-./node_modules/genkit/lib/genkit.js
-./node_modules/genkit/lib/index.mjs
-./src/ai/genkit.ts
-./src/ai/flows/irrigation-flow.ts
-
-./node_modules/handlebars/lib/index.js
-require.extensions is not supported by webpack. Use a loader instead.
-
-Import trace for requested module:
-./node_modules/handlebars/lib/index.js
-./node_modules/dotprompt/dist/index.js
-./node_modules/@genkit-ai/core/lib/registry.js
-./node_modules/genkit/lib/registry.js
-./node_modules/genkit/lib/genkit.js
-./node_modules/genkit/lib/index.mjs
-./src/ai/genkit.ts
-./src/ai/flows/irrigation-flow.ts
-
-./node_modules/handlebars/lib/index.js
-require.extensions is not supported by webpack. Use a loader instead.
-
-Import trace for requested module:
-./node_modules/handlebars/lib/index.js
-./node_modules/dotprompt/dist/index.js
-./node_modules/@genkit-ai/core/lib/registry.js
-./node_modules/genkit/lib/registry.js
-./node_modules/genkit/lib/genkit.js
-./node_modules/genkit/lib/index.mjs
-./src/ai/genkit.ts
-./src/ai/flows/irrigation-flow.ts
-
- ✓ Compiled successfully in 8.0s
-   Skipping validation of types
-   Skipping linting
-   Collecting page data ...
-   Generating static pages (0/9) ...
-   Generating static pages (2/9) 
-   Generating static pages (4/9) 
-   Generating static pages (6/9) 
- ✓ Generating static pages (9/9)
-   Finalizing page optimization ...
-   Collecting build traces ...
-
-Route (app)                                 Size  First Load JS
-┌ ○ /                                    71.9 kB         311 kB
-├ ○ /_not-found                            986 B         102 kB
-├ ○ /admin                                 145 B         101 kB
-├ ○ /admin/settings                      5.09 kB         115 kB
-├ ƒ /api/db/[endpoint]                     145 B         101 kB
-├ ƒ /api/metric-history/[stationId]        145 B         101 kB
-├ ƒ /api/station-metrics/[stationId]       145 B         101 kB
-├ ○ /login                                  4 kB         113 kB
-└ ○ /metrics                             8.74 kB         248 kB
-+ First Load JS shared by all             101 kB
-  ├ chunks/4bd1b696-c50daade9b825b4c.js  53.2 kB
-  ├ chunks/684-38fce657057ebe28.js       45.8 kB
-  └ other shared chunks (total)          1.97 kB
-
-
-○  (Static)   prerendered as static content
-ƒ  (Dynamic)  server-rendered on demand
-
-
 > nextn@0.1.0 start
 > next start -p 8537
 
@@ -88,4 +8,4 @@ Route (app)                                 Size  First Load JS
    - Network:      http://177.129.9.194:8537
 
  ✓ Starting...
- ✓ Ready in 374ms
+ ✓ Ready in 376ms

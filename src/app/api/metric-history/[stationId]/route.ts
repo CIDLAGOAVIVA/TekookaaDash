@@ -8,6 +8,7 @@ import { GRANDEZA_TO_METRIC_BY_ID } from '@/lib/grandeza-map';
  * Query params:
  *   - limit: número máximo de registros por sensor (default 100)
  *   - sensorId: filtrar por sensor específico
+ *   - minutes: intervalo de tempo em minutos para buscar histórico (default 120 = 2 horas)
  */
 export async function GET(
   req: NextRequest,
@@ -17,8 +18,9 @@ export async function GET(
     const { stationId } = await params;
     const idEstacao = parseInt(stationId);
     const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get('limit') || '100');
+    const limit = parseInt(url.searchParams.get('limit') || '500');
     const sensorId = url.searchParams.get('sensorId') ? parseInt(url.searchParams.get('sensorId')!) : null;
+    const minutes = parseInt(url.searchParams.get('minutes') || '120'); // 2 horas padrão
 
     if (isNaN(idEstacao)) {
       return NextResponse.json(
@@ -45,11 +47,11 @@ export async function GET(
     const grandezaById = new Map(grandezas.map(g => [g.id, g]));
 
     // Buscar histórico por sensor
-    const metricsMap = new Map<number, any>();
+    const metricsMap = new Map<string, any>();
 
     for (const sensor of sensores) {
-      // Buscar histórico completo (sem DISTINCT, apenas ordenado por timestamp DESC)
-      const medidas = await dbApi.historicoMedidasDoSensor(sensor.id, limit);
+      // Buscar histórico por intervalo de tempo (em minutos)
+      const medidas = await dbApi.historicoMedidasDoSensorPorIntervalo(sensor.id, minutes, limit);
 
       // Agrupar por grandeza, mantendo ordem cronológica invertida
       const grandezaMap = new Map<number, any[]>();

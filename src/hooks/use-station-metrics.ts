@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import type { SensorData } from '@/lib/types';
 import { iconForMetricName } from '@/lib/metric-icons';
 
@@ -14,18 +14,76 @@ interface StationMetric {
   metricKey?: string;
 }
 
-const POLLING_INTERVAL = 10000; // 10 segundos
-const MAX_TREND_POINTS = 100; // Manter últimos 100 pontos
+interface HistoryMetric {
+  id: number;
+  nome: string;
+  nome_curto: string;
+  unidade: string;
+  metricKey: string;
+  history: Array<{ time: string; value: number }>;
+  current: number;
+  min: number;
+  max: number;
+  avg: number;
+}
 
-export function useStationMetrics(stationId: string | null, refetchInterval = POLLING_INTERVAL) {
+const POLLING_INTERVAL = 10000; // 10 segundos
+const MAX_TREND_POINTS = 500; // Aumentado para comportar mais histórico
+
+interface UseStationMetricsOptions {
+  refetchInterval?: number;
+  historyMinutes?: number;
+}
+
+export function useStationMetrics(
+  stationId: string | null, 
+  options: UseStationMetricsOptions = {}
+) {
+  const { refetchInterval = POLLING_INTERVAL, historyMinutes = 120 } = options;
+  
   const [metrics, setMetrics] = useState<StationMetric[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sensorData, setSensorData] = useState<Partial<SensorData>>({});
+  const [historyLoaded, setHistoryLoaded] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const trendHistoryRef = useRef<Map<string, Array<{ time: string; value: number }>>>(new Map());
 
-  const fetchMetrics = async () => {
+  // Carregar histórico inicial
+  const loadInitialHistory = useCallback(async () => {
+    if (!stationId) return;
+
+    try {
+      console.log(`Carregando histórico de ${historyMinutes} minutos...`);
+      const res = await fetch(
+        `/api/metric-history/${stationId}?minutes=${historyMinutes}`,
+        { headers: { 'Cache-Control': 'no-store' } }
+      );
+
+      if (!res.ok) {
+        throw new Error(`Erro: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      const historyMetrics: HistoryMetric[] = data.metrics || [];
+
+      // Inicializar o histórico para cada métrica
+      historyMetrics.forEach((metric: HistoryMetric) => {
+        const keyStr = metric.metricKey;
+        if (keyStr && metric.history.length > 0) {
+          trendHistoryRef.current.set(keyStr, metric.history);
+        }
+      });
+
+      console.log(`Histórico carregado: ${historyMetrics.length} métricas`);
+      setHistoryLoaded(true);
+    } catch (err) {
+      console.error('Erro ao carregar histórico inicial:', err);
+      setHistoryLoaded(true); // Marcar como carregado mesmo com erro para não bloquear
+    }
+  }, [stationId, historyMinutes]);
+
+  const fetchMetrics = useCallback(async () => {
     if (!stationId) return;
 
     try {
@@ -80,13 +138,14 @@ export function useStationMetrics(stationId: string | null, refetchInterval = PO
       console.error('Erro ao carregar métricas da estação:', err);
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
     }
-  };
+  }, [stationId]);
 
   useEffect(() => {
     if (!stationId) {
       setMetrics([]);
       setSensorData({});
       trendHistoryRef.current.clear();
+      setHistoryLoaded(false);
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -94,9 +153,18 @@ export function useStationMetrics(stationId: string | null, refetchInterval = PO
       return;
     }
 
-    // Busca inicial
+    // Busca inicial: primeiro carregar histórico, depois métricas atuais
     setLoading(true);
-    fetchMetrics().finally(() => setLoading(false));
+    setHistoryLoaded(false);
+    trendHistoryRef.current.clear();
+
+    (async () => {
+      // Carregar histórico primeiro
+      await loadInitialHistory();
+      // Depois carregar métricas atuais
+      await fetchMetrics();
+      setLoading(false);
+    })();
 
     // Configurar polling automático
     intervalRef.current = setInterval(() => {
@@ -109,7 +177,7 @@ export function useStationMetrics(stationId: string | null, refetchInterval = PO
         intervalRef.current = null;
       }
     };
-  }, [stationId, refetchInterval]);
+  }, [stationId, refetchInterval, historyMinutes, loadInitialHistory, fetchMetrics]);
 
-  return { metrics, loading, error, sensorData };
+  return { metrics, loading, error, sensorData, historyLoaded };
 }

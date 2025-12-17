@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDashboardData } from '@/hooks/use-dashboard-data';
 import { useStationMetrics } from '@/hooks/use-station-metrics';
+import { useDashboardSettings } from '@/hooks/use-dashboard-settings';
 import type { Property, Crop, Station } from '@/lib/types';
 import SensorMetricsCard from './SensorMetricsCard';
 import WeatherForecastCard from './WeatherForecastCard';
@@ -34,13 +35,20 @@ const SkeletonCard = () => (
 
 export default function DashboardClient() {
   const { properties, loading, error } = useDashboardData();
+  const { settings, isLoaded: settingsLoaded } = useDashboardSettings();
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
   const [selectedCropId, setSelectedCropId] = useState<string | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   
-  // Carregar métricas da estação selecionada
-  const { sensorData: stationMetrics, loading: metricsLoading } = useStationMetrics(selectedStationId);
+  // Carregar métricas da estação selecionada com configurações de histórico
+  const { sensorData: stationMetrics, loading: metricsLoading } = useStationMetrics(
+    selectedStationId,
+    {
+      refetchInterval: settings.pollingIntervalSeconds * 1000,
+      historyMinutes: settings.historyIntervalMinutes,
+    }
+  );
 
   const selectedProperty = useMemo(() => properties.find(p => p.id === selectedPropertyId), [properties, selectedPropertyId]);
   const availableCrops = useMemo(() => selectedProperty?.crops || [], [selectedProperty]);

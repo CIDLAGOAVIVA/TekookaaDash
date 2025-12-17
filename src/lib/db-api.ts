@@ -117,3 +117,26 @@ export async function historicoMedidasDoSensor(idSensor: number, limit = 100): P
     [idSensor, limit]
   );
 }
+
+/**
+ * Busca medidas de um sensor dentro de um intervalo de tempo
+ * @param idSensor ID do sensor
+ * @param minutes Intervalo em minutos a partir de agora
+ * @param limit Limite máximo de registros
+ */
+export async function historicoMedidasDoSensorPorIntervalo(
+  idSensor: number, 
+  minutes: number, 
+  limit = 500
+): Promise<TabMedidaIndividual[]> {
+  return query<TabMedidaIndividual>(
+    `SELECT id, id_sensor, id_grandeza, valor, ts_medida 
+     FROM tab_medida_individual 
+     WHERE id_sensor = $1 
+       AND ts_medida >= NOW() - INTERVAL '${minutes} minutes'
+     ORDER BY ts_medida DESC 
+     LIMIT $2`,
+    [idSensor, limit]
+  );
+}
+
