@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: 'AgroDash',
-  description: 'Dados que cultivam o seu dinheiro',
+  description: 'Semeando dados e colhendo eficiência',
 };
 
 export default function RootLayout({

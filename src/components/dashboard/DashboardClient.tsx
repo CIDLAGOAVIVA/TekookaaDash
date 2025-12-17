@@ -102,7 +102,7 @@ export default function DashboardClient() {
         <div className="mb-8 flex justify-between items-center">
           <div className="text-left">
             <h1 className="text-4xl font-bold text-primary mb-2 font-headline">AgroDash</h1>
-            <p className="text-muted-foreground">Dados que cultivam o seu dinheiro</p>
+            <p className="text-muted-foreground">Semeando dados e colhendo eficiência</p>
           </div>
           <Button asChild variant="outline">
             <Link href="/login">
