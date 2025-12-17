@@ -3,7 +3,7 @@
 import type { FC } from 'react';
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import type { SensorData, SensorMetric } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -11,9 +11,36 @@ import { Activity } from 'lucide-react';
 
 interface MiniChartProps {
   data: { time: string; value: number }[];
+  unit?: string;
 }
 
-const MiniChart: FC<MiniChartProps> = ({ data }) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    payload: { time: string; value: number };
+  }>;
+  unit?: string;
+}
+
+const CustomTooltip: FC<CustomTooltipProps> = ({ active, payload, unit }) => {
+  if (active && payload && payload.length) {
+    const data = payload[0];
+    return (
+      <div className="bg-background border border-border/50 rounded-lg px-3 py-2 shadow-xl text-xs">
+        <p className="font-semibold text-foreground">
+          {data.value.toLocaleString('pt-BR')}{unit ? ` ${unit}` : ''}
+        </p>
+        <p className="text-muted-foreground">
+          {data.payload.time}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const MiniChart: FC<MiniChartProps> = ({ data, unit }) => {
   const chartConfig = {
     value: {
       label: 'Valor',
@@ -31,7 +58,10 @@ const MiniChart: FC<MiniChartProps> = ({ data }) => {
               <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <ChartTooltip cursor={false} content={<ChartTooltipContent hideIndicator hideLabel />} />
+          <ChartTooltip 
+            cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '3 3' }} 
+            content={<CustomTooltip unit={unit} />} 
+          />
           <Area dataKey="value" type="monotone" fill="url(#chartGradient)" stroke="hsl(var(--primary))" strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
@@ -60,7 +90,7 @@ const MetricDisplay: FC<{ metric: SensorMetric | undefined }> = ({ metric }) => 
         </div>
       </div>
       <div className="mt-2">
-        <MiniChart data={metric.trend} />
+        <MiniChart data={metric.trend} unit={metric.unit} />
       </div>
     </div>
   );
