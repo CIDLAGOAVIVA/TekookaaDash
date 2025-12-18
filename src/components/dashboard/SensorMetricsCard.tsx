@@ -8,7 +8,8 @@ import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SensorData, SensorMetric } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Activity, Clock } from 'lucide-react';
+import { Activity, Clock, CloudRain, CloudDrizzle, CloudLightning, Sun, Cloud } from 'lucide-react';
+import { interpretRainSensor, type RainLevel } from '@/lib/rain-detection';
 
 interface MiniChartProps {
   data: { time: string; value: number }[];
@@ -92,6 +93,80 @@ const MetricDisplay: FC<{ metric: SensorMetric | undefined }> = ({ metric }) => 
       </div>
       <div className="mt-2">
         <MiniChart data={metric.trend} unit={metric.unit} />
+      </div>
+    </div>
+  );
+}
+
+/** Componente especial para exibição da detecção de chuva com valor qualitativo */
+const RainDetectionDisplay: FC<{ metric: SensorMetric | undefined }> = ({ metric }) => {
+  if (!metric) {
+    return null;
+  }
+  
+  const rainInterpretation = interpretRainSensor(metric.value);
+  
+  // Mapear o nível de chuva para o ícone apropriado
+  const getRainIcon = (level: RainLevel['level']) => {
+    switch (level) {
+      case 'dry':
+        return Sun;
+      case 'mist':
+        return Cloud;
+      case 'light':
+        return CloudDrizzle;
+      case 'moderate':
+        return CloudRain;
+      case 'heavy':
+        return CloudRain;
+      case 'intense':
+        return CloudLightning;
+      default:
+        return Cloud;
+    }
+  };
+  
+  const RainIcon = getRainIcon(rainInterpretation.level);
+  
+  // Cores do fundo baseadas no nível
+  const getBgColor = (level: RainLevel['level']) => {
+    switch (level) {
+      case 'dry':
+        return 'bg-green-500/10';
+      case 'mist':
+        return 'bg-blue-300/10';
+      case 'light':
+        return 'bg-blue-400/10';
+      case 'moderate':
+        return 'bg-blue-500/10';
+      case 'heavy':
+        return 'bg-blue-600/10';
+      case 'intense':
+        return 'bg-blue-700/10';
+      default:
+        return 'bg-card-foreground/5';
+    }
+  };
+  
+  return (
+    <div className={cn(
+      "flex flex-col justify-between p-4 rounded-lg h-full transition-colors",
+      getBgColor(rainInterpretation.level)
+    )}>
+      <div>
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-sm text-card-foreground/80">{metric.name}</span>
+          <RainIcon className={cn("w-5 h-5", rainInterpretation.color)} />
+        </div>
+        <div className={cn("text-2xl font-bold", rainInterpretation.color)}>
+          {rainInterpretation.label}
+        </div>
+        <div className="text-xs text-card-foreground/60 mt-1">
+          {rainInterpretation.description}
+        </div>
+      </div>
+      <div className="mt-2">
+        <MiniChart data={metric.trend} unit="" />
       </div>
     </div>
   );
@@ -188,7 +263,7 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({
           <MetricDisplay metric={sensorData.windDirection} />
           <MetricDisplay metric={sensorData.windQuadrant} />
           <MetricDisplay metric={sensorData.precipitation} />
-          <MetricDisplay metric={sensorData.rainDetection} />
+          <RainDetectionDisplay metric={sensorData.rainDetection} />
           <MetricDisplay metric={sensorData.ultravioletIndex} />
         </div>
       </CardContent>

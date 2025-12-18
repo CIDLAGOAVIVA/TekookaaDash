@@ -27,7 +27,7 @@ const station1: Property['crops'][0]['stations'][0] = {
     windDirection: { name: 'Direção do Vento', value: 225, unit: '°', trend: generateTrend(225, 7, 0.2), icon: Navigation },
     windQuadrant: { name: 'Quadrante do Vento', value: 3, unit: '', trend: generateTrend(3, 7, 0.3), icon: Compass },
     co2: { name: 'CO₂ no Ar', value: 410, unit: 'ppm', trend: generateTrend(410), icon: Cloud },
-    rainDetection: { name: 'Indicador de Chuva', value: 1, unit: '', trend: generateTrend(1, 7, 1), icon: CloudRain },
+    rainDetection: { name: 'Indicador de Chuva', value: 4095, unit: '', trend: generateTrend(4095, 7, 0.05), icon: CloudRain },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({
@@ -81,7 +81,7 @@ const station2: Property['crops'][0]['stations'][0] = {
     windDirection: { name: 'Direção do Vento', value: 180, unit: '°', trend: generateTrend(180, 7, 0.2), icon: Navigation },
     windQuadrant: { name: 'Quadrante do Vento', value: 2, unit: '', trend: generateTrend(2, 7, 0.3), icon: Compass },
     co2: { name: 'CO₂ no Ar', value: 420, unit: 'ppm', trend: generateTrend(420), icon: Cloud },
-    rainDetection: { name: 'Indicador de Chuva', value: 0, unit: '', trend: generateTrend(0, 7, 1), icon: CloudRain },
+    rainDetection: { name: 'Indicador de Chuva', value: 2500, unit: '', trend: generateTrend(2500, 7, 0.3), icon: CloudRain },
   },
   weatherForecast: {
     twentyFourHours: Array.from({ length: 8 }, (_, i) => ({

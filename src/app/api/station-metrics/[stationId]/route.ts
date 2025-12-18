@@ -21,8 +21,8 @@ export async function GET(
 
     if (isNaN(idEstacao)) {
       return NextResponse.json(
-        { error: 'ID da estação inválido' },
-        { status: 400 }
+        { metrics: [], count: 0, message: 'ID de estação não numérico (possivelmente mock)' },
+        { status: 200 }
       );
     }
 

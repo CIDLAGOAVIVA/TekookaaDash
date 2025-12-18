@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useDashboardData } from '@/hooks/use-dashboard-data';
 import { useStationMetrics } from '@/hooks/use-station-metrics';
 import { useDashboardSettings } from '@/hooks/use-dashboard-settings';
+import { useWeatherForecast } from '@/hooks/use-weather-forecast';
 import type { Property, Crop, Station } from '@/lib/types';
 import SensorMetricsCard from './SensorMetricsCard';
 import WeatherForecastCard from './WeatherForecastCard';
@@ -49,6 +50,9 @@ export default function DashboardClient() {
       historyMinutes: settings.historyIntervalMinutes,
     }
   );
+
+  // Carregar previsão do tempo da estação selecionada
+  const { forecast: weatherForecast, loading: weatherLoading } = useWeatherForecast(selectedStationId);
 
   const selectedProperty = useMemo(() => properties.find(p => p.id === selectedPropertyId), [properties, selectedPropertyId]);
   const availableCrops = useMemo(() => selectedProperty?.crops || [], [selectedProperty]);
@@ -197,7 +201,7 @@ export default function DashboardClient() {
                 </Link>
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">
-                <WeatherForecastCard forecast={selectedStationData.weatherForecast} />
+                <WeatherForecastCard forecast={weatherForecast.twentyFourHours.length > 0 ? weatherForecast : selectedStationData.weatherForecast} />
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">
                 <AlertingSensorsCard sensors={selectedStationData.alertingSensors} />
