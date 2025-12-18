@@ -53,3 +53,8 @@ export const GRANDEZA_TO_METRIC_BY_NAME: Record<string, MetricKey> = {
   dg: 'windDirection',
   h: 'airHumidity',
 };
+
+// Mapeamento de nomes de exibição personalizados (override do banco)
+export const GRANDEZA_DISPLAY_NAME: Record<number, string> = {
+  37: 'Temperatura do Solo',
+};

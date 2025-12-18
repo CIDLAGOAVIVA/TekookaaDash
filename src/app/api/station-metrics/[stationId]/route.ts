@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as dbApi from '@/lib/db-api';
-import { GRANDEZA_TO_METRIC_BY_ID } from '@/lib/grandeza-map';
+import { GRANDEZA_TO_METRIC_BY_ID, GRANDEZA_DISPLAY_NAME } from '@/lib/grandeza-map';
 
 // Cache simples em memória com TTL
 const metricsCache = new Map<string, { data: any; timestamp: number }>();
@@ -78,7 +78,7 @@ export async function GET(
 
           metricsMap.set(medida.id_grandeza, {
             id: grandeza.id,
-            nome: grandeza.descricao_grandeza || grandeza.nome_grandeza,
+            nome: GRANDEZA_DISPLAY_NAME[grandeza.id] || grandeza.descricao_grandeza || grandeza.nome_grandeza,
             nome_curto: grandeza.nome_grandeza,
             unidade: grandeza.unidade_medida || '',
             valor,

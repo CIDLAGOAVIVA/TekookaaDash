@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as dbApi from '@/lib/db-api';
-import { GRANDEZA_TO_METRIC_BY_ID } from '@/lib/grandeza-map';
+import { GRANDEZA_TO_METRIC_BY_ID, GRANDEZA_DISPLAY_NAME } from '@/lib/grandeza-map';
 
 /**
  * GET /api/metric-history/[stationId]
@@ -88,7 +88,7 @@ export async function GET(
         
         metricsMap.set(key, {
           id: grandeza.id,
-          nome: grandeza.descricao_grandeza || grandeza.nome_grandeza,
+          nome: GRANDEZA_DISPLAY_NAME[grandeza.id] || grandeza.descricao_grandeza || grandeza.nome_grandeza,
           nome_curto: grandeza.nome_grandeza,
           unidade: grandeza.unidade_medida || '',
           metricKey,
