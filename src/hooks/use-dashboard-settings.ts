@@ -3,14 +3,14 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export interface DashboardSettings {
-  /** Intervalo de histórico em minutos (padrão: 120 = 2 horas) */
+  /** Intervalo de histórico em minutos (padrão: 480 = 8 horas) */
   historyIntervalMinutes: number;
   /** Intervalo de polling em segundos (padrão: 10) */
   pollingIntervalSeconds: number;
 }
 
 const DEFAULT_SETTINGS: DashboardSettings = {
-  historyIntervalMinutes: 120, // 2 horas
+  historyIntervalMinutes: 480, // 8 horas
   pollingIntervalSeconds: 10,
 };
 

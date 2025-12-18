@@ -35,7 +35,7 @@ const SkeletonCard = () => (
 
 export default function DashboardClient() {
   const { properties, loading, error } = useDashboardData();
-  const { settings, isLoaded: settingsLoaded } = useDashboardSettings();
+  const { settings, isLoaded: settingsLoaded, saveSettings } = useDashboardSettings();
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
   const [selectedCropId, setSelectedCropId] = useState<string | null>(null);
   const [selectedStationId, setSelectedStationId] = useState<string | null>(null);
@@ -187,7 +187,13 @@ export default function DashboardClient() {
             >
               <motion.div variants={cardVariants} className="lg:col-span-4">
                 <Link href={`/metrics?stationId=${selectedStationId}`}>
-                  <SensorMetricsCard sensorData={{ ...selectedStationData.sensorData, ...stationMetrics }} />
+                  <SensorMetricsCard 
+                    sensorData={{ ...selectedStationData.sensorData, ...stationMetrics }} 
+                    currentPeriod={settings.historyIntervalMinutes}
+                    onPeriodChange={(minutes) => {
+                      saveSettings({ historyIntervalMinutes: minutes });
+                    }}
+                  />
                 </Link>
               </motion.div>
               <motion.div variants={cardVariants} className="lg:col-span-2">

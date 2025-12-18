@@ -5,9 +5,10 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { SensorData, SensorMetric } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { Activity } from 'lucide-react';
+import { Activity, Clock } from 'lucide-react';
 
 interface MiniChartProps {
   data: { time: string; value: number }[];
@@ -96,11 +97,29 @@ const MetricDisplay: FC<{ metric: SensorMetric | undefined }> = ({ metric }) => 
   );
 }
 
+/** Opções de período de tempo em minutos */
+export const TIME_PERIOD_OPTIONS = [
+  { value: '60', label: '1 hora' },
+  { value: '120', label: '2 horas' },
+  { value: '240', label: '4 horas' },
+  { value: '480', label: '8 horas' },
+  { value: '720', label: '12 horas' },
+  { value: '1440', label: '24 horas' },
+];
+
 interface SensorMetricsCardProps {
   sensorData: SensorData;
+  /** Período de tempo atual em minutos */
+  currentPeriod?: number;
+  /** Callback quando o período de tempo é alterado */
+  onPeriodChange?: (minutes: number) => void;
 }
 
-const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
+const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ 
+  sensorData, 
+  currentPeriod = 480, 
+  onPeriodChange 
+}) => {
   const [lastUpdate, setLastUpdate] = useState<string>('agora');
   const [isLive, setIsLive] = useState(true);
 
@@ -113,12 +132,39 @@ const SensorMetricsCard: FC<SensorMetricsCardProps> = ({ sensorData }) => {
     return () => clearInterval(timer);
   }, []);
 
+  const handlePeriodChange = (value: string) => {
+    const minutes = parseInt(value);
+    if (onPeriodChange && !isNaN(minutes)) {
+      onPeriodChange(minutes);
+    }
+  };
+
   return (
     <Card className="rounded-2xl shadow-lg h-full bg-card text-card-foreground border-none transition-all duration-200 hover:shadow-xl">
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <CardTitle><h2 className="font-headline text-xl">Métricas Atuais dos Sensores</h2></CardTitle>
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-4 text-sm">
+            {onPeriodChange && (
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-muted-foreground" />
+                <Select 
+                  value={String(currentPeriod)} 
+                  onValueChange={handlePeriodChange}
+                >
+                  <SelectTrigger className="w-[130px] h-8 text-xs bg-background/50">
+                    <SelectValue placeholder="Período" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIME_PERIOD_OPTIONS.map(option => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="flex items-center gap-1">
               <Activity className="w-4 h-4 text-green-500 animate-pulse" />
               <span className="text-card-foreground/60">Em tempo real</span>
