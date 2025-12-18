@@ -8,6 +8,7 @@ interface StationMetric {
   nome_curto: string;
   unidade: string;
   valor: number;
+  valor_raw?: number;
   ts_medida: string;
   id_sensor: number;
   nome_sensor: string;
@@ -105,7 +106,10 @@ export function useStationMetrics(
         const key = metric.metricKey as keyof SensorData;
         if (key) {
           const icon = iconForMetricName(metric.nome_curto, metric.unidade);
-          const timePoint = { time: new Date(metric.ts_medida).toISOString(), value: metric.valor };
+          const timePoint = { 
+            time: new Date(metric.ts_medida).toISOString(), 
+            value: metric.valor_raw !== undefined ? metric.valor_raw : metric.valor 
+          };
           
           // Obter histórico existente ou criar novo
           const keyStr = String(key);

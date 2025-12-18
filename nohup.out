@@ -1,11 +1,80 @@
 nohup: ignorando entrada
 
-> nextn@0.1.0 start
-> next start -p 8537
+> nextn@0.1.0 dev
+> next dev --turbopack -p 8537
 
-   ▲ Next.js 15.3.3
+   ▲ Next.js 15.3.3 (Turbopack)
    - Local:        http://localhost:8537
    - Network:      http://177.129.9.194:8537
+   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 377ms
+ ✓ Ready in 979ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.6s
+ GET / 200 in 4518ms
+ ⚠ Cross origin request detected from 177.129.9.194 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 700ms
+ GET /favicon.ico?favicon.56766c03.ico 200 in 836ms
+ GET /api/db/culturas 200 in 1146ms
+ GET /api/db/estacoes 200 in 1127ms
+ GET /api/db/grandezas 200 in 1125ms
+ GET /api/db/posicoes-estacao 200 in 1132ms
+ GET /api/db/propriedades 200 in 1156ms
+ ○ Compiling /api/metric-history/[stationId] ...
+ ✓ Compiled /api/metric-history/[stationId] in 919ms
+ GET /api/metric-history/st1?minutes=480 200 in 1045ms
+ GET /api/metric-history/8?minutes=480 200 in 437ms
+Erro na API de previsão do tempo: Error: ID de estação não numérico (mock)
+    at GET (src/app/api/weather/[stationId]/route.ts:52:12)
+  50 |     // Se o ID não for numérico (ex: mock data 'st1'), usar fallback
+  51 |     if (isNaN(Number(stationId))) {
+> 52 |       throw new Error('ID de estação não numérico (mock)');
+     |            ^
+  53 |     }
+  54 |
+  55 |     // Buscar localização da estação no banco
+ GET /api/weather/st1 200 in 1153ms
+ ○ Compiling /api/station-metrics/[stationId] ...
+Erro na API de previsão do tempo: error: erro de sintaxe em ou próximo a "ORDER"
+    at async query (src/lib/db.ts:14:17)
+    at async GET (src/app/api/weather/[stationId]/route.ts:56:26)
+  12 |
+  13 | export async function query<T>(text: string, values?: (string | number | boolean | null)[]): Promise<T[]> {
+> 14 |   const result = await pool.query(text, values);
+     |                 ^
+  15 |   return result.rows as T[];
+  16 | }
+  17 | {
+  length: 103,
+  severity: 'ERRO',
+  code: '42601',
+  detail: undefined,
+  hint: undefined,
+  position: '107',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'scan.l',
+  line: '1244',
+  routine: 'scanner_yyerror'
+}
+ GET /api/weather/8 200 in 1036ms
+ ✓ Compiled /api/station-metrics/[stationId] in 612ms
+ GET /api/station-metrics/st1 200 in 1101ms
+ POST / 200 in 59ms
+ GET /api/station-metrics/8 200 in 1080ms
+ POST / 200 in 63ms
+ GET /api/station-metrics/8 200 in 144ms
+ GET /api/station-metrics/8 200 in 134ms
+ GET /api/station-metrics/8 200 in 153ms
+ GET /api/station-metrics/8 200 in 158ms
+ GET /api/station-metrics/8 200 in 123ms
+ GET /api/station-metrics/8 200 in 151ms

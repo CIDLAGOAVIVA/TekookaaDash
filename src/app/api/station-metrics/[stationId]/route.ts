@@ -69,12 +69,20 @@ export async function GET(
         
         // Guardar a última medida por grandeza (key = id_grandeza para evitar duplicatas)
         if (!metricsMap.has(medida.id_grandeza)) {
+          let valor = medida.valor;
+
+          // Se for precipitação (ID 50), calcular o somatório do dia
+          if (grandeza.id === 50) {
+            valor = await dbApi.getDailyPrecipitationSum(sensor.id, grandeza.id);
+          }
+
           metricsMap.set(medida.id_grandeza, {
             id: grandeza.id,
             nome: grandeza.descricao_grandeza || grandeza.nome_grandeza,
             nome_curto: grandeza.nome_grandeza,
             unidade: grandeza.unidade_medida || '',
-            valor: medida.valor,
+            valor,
+            valor_raw: medida.valor,
             ts_medida: medida.ts_medida,
             id_sensor: medida.id_sensor,
             nome_sensor: sensor.nome_sensor,

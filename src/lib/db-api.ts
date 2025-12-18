@@ -140,3 +140,15 @@ export async function historicoMedidasDoSensorPorIntervalo(
   );
 }
 
+export async function getDailyPrecipitationSum(idSensor: number, idGrandeza: number): Promise<number> {
+  const result = await queryOne<{ sum: number }>(
+    `SELECT SUM(valor) as sum 
+     FROM tab_medida_individual 
+     WHERE id_sensor = $1 
+       AND id_grandeza = $2 
+       AND ts_medida >= CURRENT_DATE::timestamp`,
+    [idSensor, idGrandeza]
+  );
+  return result?.sum || 0;
+}
+
