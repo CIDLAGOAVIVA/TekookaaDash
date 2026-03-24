@@ -47,30 +47,28 @@ export async function GET(
       return NextResponse.json({ error: 'Station ID obrigatório' }, { status: 400 });
     }
 
-    // Se o ID não for numérico (ex: mock data 'st1'), usar fallback
-    if (isNaN(Number(stationId))) {
-      throw new Error('ID de estação não numérico (mock)');
-    }
-
-    // Buscar localização da estação no banco
-    const posicaoResult = await query(`
-      SELECT pe.latitude, pe.longitude
-      FROM tab_pos_estacao pe
-      WHERE pe.id_estacao = ?
-      ORDER BY pe.ts_cadastro DESC
-      LIMIT 1
-    `, [stationId]) as Array<{ latitude: number; longitude: number }> | null;
-
+    const isNumericStationId = !isNaN(Number(stationId));
     let lat: number;
     let lon: number;
 
-    if (posicaoResult && posicaoResult.length > 0) {
-      lat = posicaoResult[0].latitude;
-      lon = posicaoResult[0].longitude;
-    } else {
-      // Fallback para localização padrão (Brasília)
-      lat = -15.78;
-      lon = -47.93;
+    // Fallback para localização padrão (Brasília)
+    lat = -15.78;
+    lon = -47.93;
+
+    // Somente consulta no banco quando stationId for numérico
+    if (isNumericStationId) {
+      const posicaoResult = await query(`
+        SELECT pe.latitude, pe.longitude
+        FROM tab_pos_estacao pe
+        WHERE pe.id_estacao = $1
+        ORDER BY pe.pos_inicio DESC NULLS LAST, pe.id DESC
+        LIMIT 1
+      `, [Number(stationId)]) as Array<{ latitude: number; longitude: number }> | null;
+
+      if (posicaoResult && posicaoResult.length > 0) {
+        lat = posicaoResult[0].latitude;
+        lon = posicaoResult[0].longitude;
+      }
     }
 
     // Buscar previsão do tempo da Open-Meteo (API gratuita)
@@ -125,7 +123,8 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Erro na API de previsão do tempo:', error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('Erro na API de previsão do tempo:', errorMsg);
     
     // Retornar dados mock em caso de erro
     return NextResponse.json({

@@ -31,6 +31,12 @@ interface HistoryMetric {
 const POLLING_INTERVAL = 10000; // 10 segundos
 const MAX_TREND_POINTS = 500; // Aumentado para comportar mais histórico
 
+function isTransientFetchError(err: unknown): boolean {
+  if (err instanceof DOMException && err.name === 'AbortError') return true;
+  if (err instanceof TypeError && /failed to fetch/i.test(err.message)) return true;
+  return false;
+}
+
 interface UseStationMetricsOptions {
   refetchInterval?: number;
   historyMinutes?: number;
@@ -54,15 +60,25 @@ export function useStationMetrics(
   const loadInitialHistory = useCallback(async () => {
     if (!stationId) return;
 
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     try {
       console.log(`Carregando histórico de ${historyMinutes} minutos...`);
+      
+      // Criar um AbortController com timeout de 15 segundos
+      const controller = new AbortController();
+      timeoutId = setTimeout(() => controller.abort(), 15000);
+      
       const res = await fetch(
         `/api/metric-history/${stationId}?minutes=${historyMinutes}`,
-        { headers: { 'Cache-Control': 'no-store' } }
+        { 
+          headers: { 'Cache-Control': 'no-store' },
+          signal: controller.signal,
+        }
       );
-
+      
       if (!res.ok) {
-        throw new Error(`Erro: ${res.statusText}`);
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
       }
 
       const data = await res.json();
@@ -79,22 +95,37 @@ export function useStationMetrics(
       console.log(`Histórico carregado: ${historyMetrics.length} métricas`);
       setHistoryLoaded(true);
     } catch (err) {
-      console.error('Erro ao carregar histórico inicial:', err);
+      if (!isTransientFetchError(err)) {
+        console.error('Erro ao carregar histórico inicial:', err);
+      } else {
+        console.warn('Falha transitória ao carregar histórico. Continuando...');
+      }
       setHistoryLoaded(true); // Marcar como carregado mesmo com erro para não bloquear
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
     }
   }, [stationId, historyMinutes]);
 
   const fetchMetrics = useCallback(async () => {
     if (!stationId) return;
 
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     try {
       setError(null);
+      
+      // Criar um AbortController com timeout de 10 segundos
+      const controller = new AbortController();
+      timeoutId = setTimeout(() => controller.abort(), 10000);
+      
       const res = await fetch(`/api/station-metrics/${stationId}`, {
         headers: { 'Cache-Control': 'no-store' },
+        signal: controller.signal,
       });
 
       if (!res.ok) {
-        throw new Error(`Erro: ${res.statusText}`);
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(`HTTP ${res.status}: ${errorData.error || res.statusText}`);
       }
 
       const data = await res.json();
@@ -139,8 +170,17 @@ export function useStationMetrics(
       setSensorData(sensorDataMap);
       console.log('Métricas atualizadas:', new Date().toLocaleTimeString());
     } catch (err) {
-      console.error('Erro ao carregar métricas da estação:', err);
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+      // Erros de rede/abort durante polling são transitórios e esperados
+      if (isTransientFetchError(err)) {
+        console.warn('Falha ao conectar com a API de métricas. Tentando novamente...');
+        return;
+      }
+
+      const errorMsg = err instanceof Error ? err.message : 'Erro desconhecido';
+      console.error('Erro ao carregar métricas da estação:', errorMsg);
+      setError(errorMsg);
+    } finally {
+      if (timeoutId) clearTimeout(timeoutId);
     }
   }, [stationId]);
 

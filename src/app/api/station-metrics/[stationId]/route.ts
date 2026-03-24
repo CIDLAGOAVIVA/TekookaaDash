@@ -15,8 +15,11 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ stationId: string }> }
 ) {
+  let rawStationId: string | null = null;
+
   try {
     const { stationId } = await params;
+    rawStationId = stationId;
     const idEstacao = parseInt(stationId);
 
     if (isNaN(idEstacao)) {
@@ -108,10 +111,19 @@ export async function GET(
       headers: { 'Cache-Control': 'no-store', 'X-Cache': 'MISS' }
     });
   } catch (error) {
-    console.error('Erro ao buscar métricas da estação:', error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('Erro ao buscar métricas da estação:', errorMsg);
+    
+    // Retornar resposta genérica com status 500 para não expor detalhes do erro
     return NextResponse.json(
-      { error: 'Erro ao buscar métricas da estação' },
-      { status: 500 }
+      { 
+        error: 'Erro ao buscar métricas da estação',
+        message: process.env.NODE_ENV === 'development' ? errorMsg : undefined,
+        stationId: rawStationId,
+        metrics: [],
+        count: 0,
+      },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } }
     );
   }
 }
